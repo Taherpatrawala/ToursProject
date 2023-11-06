@@ -32,7 +32,7 @@ const Scraper = () => {
         Get Data
       </button>
       <div className="flex overflow-scroll">
-        {scrapedData?.data?.images?.map((image: any) => {
+        {scrapedData?.data?.images?.map((image: string) => {
           return <img src={image} alt="" className="w-[45vw]" />;
         })}
       </div>
