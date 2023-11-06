@@ -20,9 +20,16 @@ class ScrapedDataView(APIView):
             html_content = response.text
             soup = BeautifulSoup(html_content, 'html.parser')
             # print(soup.prettify())
-
-            data = soup.find('div', 'readMoreText')
-            data = str(data)
+            imagesData = soup.find_all('div', 'lazyBG', limit=6)
+            # print(imagesData)
+            imagesLinks = list(
+                map(lambda div: div['data-original'], imagesData))
+            print(imagesLinks)
+            descriptionData = soup.find('div', 'readMoreText')
+            data = {
+                'images': imagesLinks,
+                'description': str(descriptionData)
+            }
             return JsonResponse(data, status=status.HTTP_200_OK, safe=False)
         else:
             return HttpResponse({'msg': 'error'}, status=status.HTTP_400_BAD_REQUEST)

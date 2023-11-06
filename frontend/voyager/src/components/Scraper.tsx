@@ -25,17 +25,20 @@ const Scraper = () => {
         type="text"
         value={placeName}
         onChange={(e) => setPlaceName(e.target.value)}
-        onKeyDown={(e) => {
-          e.key === "Enter" ? handleScrape : null;
-        }}
+        onKeyDown={(e) => (e.key === "Enter" ? handleScrape() : null)}
         className="border-2 border-red-300"
       />
       <button onClick={handleScrape} className="border">
         Get Data
       </button>
+      <div className="flex overflow-scroll">
+        {scrapedData?.data?.images?.map((image: any) => {
+          return <img src={image} alt="" className="w-[45vw]" />;
+        })}
+      </div>
       <div
         className=""
-        dangerouslySetInnerHTML={{ __html: scrapedData.data }}
+        dangerouslySetInnerHTML={{ __html: scrapedData?.data.description }}
       ></div>
     </div>
   );
