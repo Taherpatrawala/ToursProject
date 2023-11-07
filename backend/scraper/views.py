@@ -53,17 +53,19 @@ class ScrapedDataView2(APIView):
             #    "/html/body/div/div/main/section[1]/div/div/div/div/div/p")[0].text
             # print(description1)
             description = str(soup.find('section', 'destination-description'))
-            cards = soup.find_all('div', 'tour-card', limit=4)
+            cards = soup.find_all('div', 'tour-card', limit=20)
 
             def cardDataHandler(card):
 
                 cardImage = card.find('img', 'lazy-image')['data-src']
                 cardTitle = card.find('a', 'title').text
                 cardPrice = card.find('span', 'current-price').text
+                cardRedirectUrl = card['data-href']
                 cardDetails = {
                     'image': cardImage,
                     'title': cardTitle,
-                    'price': cardPrice
+                    'price': cardPrice,
+                    'redirectUrl': cardRedirectUrl
                 }
                 return cardDetails
 
@@ -72,6 +74,30 @@ class ScrapedDataView2(APIView):
             print(cardsList)
             data = {'description': description, 'cards': cardsList}
 
+            return JsonResponse(data, status=status.HTTP_200_OK, safe=False)
+        else:
+            return HttpResponse({'msg': 'error'}, status=status.HTTP_400_BAD_REQUEST)
+
+
+class ScrapeIndividualEventData(APIView):
+    permission_classes = (permissions.AllowAny,)
+
+    def post(self, request, format=None):
+        redirectUrl = request.data['redirectUrl']
+        response = requests.get(
+            f"https://www.thrillophilia.com{redirectUrl}")
+
+        if response.status_code == 200:
+            html_content = response.text
+            soup = BeautifulSoup(html_content, 'html.parser')
+            imagesLinks = soup.find_all('img', 'banner__image')
+            imageLinksList = list(
+                map(lambda image: image['src'], imagesLinks))
+            overview = str(soup.find('div', 'product-overview__details'))
+            data = {
+                'images': imageLinksList,
+                'overview': overview,
+            }
             return JsonResponse(data, status=status.HTTP_200_OK, safe=False)
         else:
             return HttpResponse({'msg': 'error'}, status=status.HTTP_400_BAD_REQUEST)

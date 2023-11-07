@@ -19,6 +19,15 @@ const Places = () => {
       .then(() => console.log())
       .catch((err) => console.log(err.message));
   };
+
+  const handleEventOverview = async (redirectUrl: string) => {
+    await axios
+      .post("http://127.0.0.1:8000/api/scrape/event/", {
+        redirectUrl: redirectUrl,
+      })
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err.message));
+  };
   return (
     <div>
       <input
@@ -34,8 +43,11 @@ const Places = () => {
       <div className="flex overflow-scroll">
         {scrapedData?.data?.cards?.map((card: any) => {
           return (
-            <div className="border-2">
-              <img src={card.image} alt="" className="w-[20vw]" />
+            <div
+              className="border-2"
+              onClick={() => handleEventOverview(card.redirectUrl)}
+            >
+              <img src={card.image} alt="" className="w-[30vw]" />
               <p className="w-[20vw]">{card.title}</p>
               <p>{card.price}</p>
             </div>
