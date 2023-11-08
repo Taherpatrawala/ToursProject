@@ -25,7 +25,7 @@ class ScrapedDataView(APIView):
             # print(imagesData)
             imagesLinks = list(
                 map(lambda div: div['data-original'], imagesData))
-            print(imagesLinks)
+            # print(imagesLinks)
             descriptionData = soup.find('div', 'readMoreText')
             data = {
                 'images': imagesLinks,
@@ -52,8 +52,12 @@ class ScrapedDataView2(APIView):
             # description1 = dom.xpath(
             #    "/html/body/div/div/main/section[1]/div/div/div/div/div/p")[0].text
             # print(description1)
+            locationName = soup.find(
+                'div', 'intro-top-content').find('h1', 'title').text
+            backgroundImage = soup.find(
+                'picture', 'bg-image').find('img')['srcset']
             description = str(soup.find('section', 'destination-description'))
-            cards = soup.find_all('div', 'tour-card', limit=20)
+            sections = soup.find_all('section', 'tour-section')
 
             def cardDataHandler(card):
 
@@ -69,10 +73,23 @@ class ScrapedDataView2(APIView):
                 }
                 return cardDetails
 
-            cardsList = list(
-                (map(lambda card: cardDataHandler(card), cards)))
-            print(cardsList)
-            data = {'description': description, 'cards': cardsList}
+            def handleSectionData(section):
+                sectionHeading = section.find('span', 'section-heading').text
+                sectionCards = section.find_all('div', 'tour-card')
+                cardsList = list(
+                    (map(lambda card: cardDataHandler(card), sectionCards)))
+                sectionData = {
+                    'heading': sectionHeading,
+                    'cards': cardsList
+                }
+                return sectionData
+
+            sectionDataList = list(
+                map(lambda section: handleSectionData(section), sections))
+
+            # print(cardsList)
+            data = {'locationName': locationName, 'backgroundImage': backgroundImage,
+                    'description': description, 'sections': sectionDataList}
 
             return JsonResponse(data, status=status.HTTP_200_OK, safe=False)
         else:
