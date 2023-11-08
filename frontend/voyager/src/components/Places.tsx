@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useState } from "react";
+
 const Places = () => {
   const [scrapedData, setScrapedData] = useState<any>();
   const [placeName, setPlaceName] = useState<string>("");
@@ -20,14 +21,6 @@ const Places = () => {
       .catch((err) => console.log(err.message));
   };
 
-  const handleEventOverview = async (redirectUrl: string) => {
-    await axios
-      .post("http://127.0.0.1:8000/api/scrape/event/", {
-        redirectUrl: redirectUrl,
-      })
-      .then((res) => console.log(res))
-      .catch((err) => console.log(err.message));
-  };
   return (
     <div>
       <input
@@ -45,7 +38,9 @@ const Places = () => {
           return (
             <div
               className="border-2"
-              onClick={() => handleEventOverview(card.redirectUrl)}
+              onClick={() =>
+                window.open(`${window.location.origin}${card.redirectUrl}`)
+              }
             >
               <img src={card.image} alt="" className="w-[30vw]" />
               <p className="w-[20vw]">{card.title}</p>
