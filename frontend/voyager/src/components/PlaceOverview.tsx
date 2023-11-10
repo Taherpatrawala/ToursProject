@@ -42,6 +42,9 @@ const PlaceOverview = () => {
       <Swiper
         spaceBetween={10}
         navigation={true}
+        style={{
+          "--swiper-navigation-color": "#000",
+        }}
         thumbs={{
           swiper: thumbsSwiper && !thumbsSwiper.destroyed ? thumbsSwiper : null,
         }}
@@ -51,7 +54,12 @@ const PlaceOverview = () => {
         {overview?.images?.map((image: string) => {
           return (
             <SwiperSlide>
-              <img src={image} alt="" />
+              <img
+                src={image}
+                alt=""
+                className="object-contain"
+                style={{ objectFit: "contain" }}
+              />
             </SwiperSlide>
           );
         })}
@@ -73,7 +81,17 @@ const PlaceOverview = () => {
           );
         })}
       </Swiper>
-      <div dangerouslySetInnerHTML={{ __html: overview?.overview }}></div>
+      <div className="">
+        <p className="text-4xl font-bold text-center">{overview.title}</p>
+        <p className="text-3xl font-semibold text-center">{overview.cost}</p>
+      </div>
+
+      <div className="flex justify-center items-center w-[100vw]">
+        <div
+          dangerouslySetInnerHTML={{ __html: overview?.overview }}
+          className="lg:w-[70vw] "
+        ></div>
+      </div>
     </div>
   );
 };

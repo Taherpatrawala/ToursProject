@@ -107,13 +107,17 @@ class ScrapeIndividualEventData(APIView):
         if response.status_code == 200:
             html_content = response.text
             soup = BeautifulSoup(html_content, 'html.parser')
+            title = soup.find('h1', 'banner__title').text
             imagesLinks = soup.find_all('img', 'banner__image')
             imageLinksList = list(
                 map(lambda image: image['src'], imagesLinks))
             overview = str(soup.find('div', 'product-overview__details'))
+            cost = soup.find('div', 'pricing-wrap__current-price').text
             data = {
+                'title': title,
                 'images': imageLinksList,
                 'overview': overview,
+                'cost': cost
             }
             return JsonResponse(data, status=status.HTTP_200_OK, safe=False)
         else:
