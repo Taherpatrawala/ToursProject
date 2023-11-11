@@ -1,10 +1,15 @@
 import axios from "axios";
 import { useState } from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "../store/store";
 
 const Places = () => {
   const [scrapedData, setScrapedData] = useState<any>();
   const [placeName, setPlaceName] = useState<string>("");
-
+  const accessToken: string = useSelector(
+    (state: RootState) => state.tokens.access
+  );
+  const atoken: any = localStorage.getItem("access_token");
   const handleScrape = async () => {
     await axios
       .post(
@@ -13,6 +18,7 @@ const Places = () => {
         {
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${atoken}`,
           },
         }
       )

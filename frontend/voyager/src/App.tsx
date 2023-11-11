@@ -3,6 +3,7 @@ import SignUp from "./components/signup/Signup";
 import Scraper from "./components/Scraper";
 import Places from "./components/Places";
 import PlaceOverview from "./components/PlaceOverview";
+import Login from "./components/Login/Login";
 function App() {
   return (
     <div className="App overflow-y-visible">
@@ -10,6 +11,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Places />} />
           <Route path="/signup" element={<SignUp />} />
+          <Route path="/login" element={<Login />} />
           <Route path="/scraper" element={<Scraper />} />
           <Route path="/places" element={<Places />} />
           <Route path=":tour/:event" element={<PlaceOverview />} />
