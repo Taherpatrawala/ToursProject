@@ -5,7 +5,7 @@ from rest_framework import status
 from rest_framework.views import APIView
 from django.contrib.auth import get_user_model
 from rest_framework import permissions
-
+from .serializers import UserInfoSerializer
 
 User = get_user_model()
 # Create your views here.
@@ -34,3 +34,13 @@ class SignUpView(APIView):
                     return Response({'message': 'User created succesfully'}, status=status.HTTP_201_CREATED)
         else:
             return Response({'message': 'Passwords do not match'})
+
+
+class GetUserDataView(generics.RetrieveAPIView):
+
+    serializer_class = UserInfoSerializer
+
+    def retrieve(self, request, *args, **kwargs):
+        user = self.request.user
+        serializer = self.get_serializer(user)
+        return Response(serializer.data, status=status.HTTP_200_OK)

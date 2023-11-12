@@ -2,6 +2,8 @@ import axios from "axios";
 import { useDispatch } from "react-redux";
 import { setToken } from "../../Slices/tokensSlice";
 import { useState } from "react";
+import { useNavigate } from "react-router";
+import Cookies from "js-cookie";
 const Login = () => {
   const [logInData, setlogInData] = useState({
     email: "",
@@ -9,6 +11,7 @@ const Login = () => {
   });
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleLogin = async () => {
     axios
@@ -16,6 +19,12 @@ const Login = () => {
       .then((res) => {
         dispatch(setToken(res.data));
         localStorage.setItem("access_token", res.data.access);
+        Cookies.set("ACCESS_TOKEN", res.data.access, {
+          sameSite: "None",
+          expires: 1,
+        });
+        Cookies.set("REFRESH_TOKEN", res.data.refresh, { expires: 14 });
+        navigate("/places");
       })
       .catch((err) => console.log(err.message));
   };

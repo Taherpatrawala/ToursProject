@@ -2,14 +2,16 @@ import axios from "axios";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../store/store";
+import Cookies from "js-cookie";
 
 const Places = () => {
   const [scrapedData, setScrapedData] = useState<any>();
   const [placeName, setPlaceName] = useState<string>("");
-  const accessToken: string = useSelector(
-    (state: RootState) => state.tokens.access
-  );
-  const atoken: any = localStorage.getItem("access_token");
+  // const accessToken: string = useSelector(
+  //   (state: RootState) => state.tokens.access
+  // );
+  //const atoken: any = localStorage.getItem("access_token");
+  const ACCESS_TOKEN = Cookies.get("ACCESS_TOKEN");
   const handleScrape = async () => {
     await axios
       .post(
@@ -18,7 +20,7 @@ const Places = () => {
         {
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${atoken}`,
+            Authorization: `Bearer ${ACCESS_TOKEN}`,
           },
         }
       )

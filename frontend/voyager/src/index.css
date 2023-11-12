@@ -6,6 +6,10 @@
     display: none;
 }
 
+html,body{
+  background-color: beige;
+}
+
 #app {
     height: 100%;
   }

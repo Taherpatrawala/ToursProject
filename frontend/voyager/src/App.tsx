@@ -9,7 +9,7 @@ function App() {
     <div className="App overflow-y-visible">
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Places />} />
+          <Route path="/" element={<Login />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/login" element={<Login />} />
           <Route path="/scraper" element={<Scraper />} />
