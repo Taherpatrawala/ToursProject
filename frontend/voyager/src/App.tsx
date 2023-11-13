@@ -4,10 +4,12 @@ import Scraper from "./components/Scraper";
 import Places from "./components/Places";
 import PlaceOverview from "./components/PlaceOverview";
 import Login from "./components/Login/Login";
+import Navbar from "./components/Navbar/Navbar";
 function App() {
   return (
     <div className="App overflow-y-visible">
       <BrowserRouter>
+        <Navbar />
         <Routes>
           <Route path="/" element={<Login />} />
           <Route path="/signup" element={<SignUp />} />
