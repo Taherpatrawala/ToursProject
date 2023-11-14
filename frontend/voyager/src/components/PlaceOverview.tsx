@@ -52,10 +52,11 @@ const PlaceOverview = () => {
         className="mySwiper2  md:h-[80vh]"
       >
         {overview?.images?.map((image: string) => {
+          const newImage = image.replace("w=5&h=5", "w=auto&h=600");
           return (
             <SwiperSlide>
               <img
-                src={image}
+                src={newImage ? newImage : image}
                 alt=""
                 className="object-contain"
                 style={{ objectFit: "contain" }}
@@ -74,9 +75,10 @@ const PlaceOverview = () => {
         className="mySwiper md:h-[20vh]"
       >
         {overview?.images?.map((image: string) => {
+          const newImage = image.replace("w=5&h=5", "w=auto&h=600");
           return (
             <SwiperSlide>
-              <img src={image} alt="" />
+              <img src={newImage ? newImage : image} alt="" />
             </SwiperSlide>
           );
         })}
