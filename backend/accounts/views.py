@@ -5,7 +5,8 @@ from rest_framework import status
 from rest_framework.views import APIView
 from django.contrib.auth import get_user_model
 from rest_framework import permissions
-from .serializers import UserInfoSerializer
+from .serializers import UserInfoSerializer, WishListDataSerializer
+from .models import WishList
 
 User = get_user_model()
 # Create your views here.
@@ -44,3 +45,15 @@ class GetUserDataView(generics.RetrieveAPIView):
         user = self.request.user
         serializer = self.get_serializer(user)
         return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+class AddToWishList(generics.CreateAPIView):
+    queryset = WishList.objects.all()
+    serializer_class = WishListDataSerializer
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
+
+    def post(self, request, *args, **kwargs):
+        self.create(request, *args, **kwargs)
+        return Response(self.request.data['event'], status=status.HTTP_200_OK)

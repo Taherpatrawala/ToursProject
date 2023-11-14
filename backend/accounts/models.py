@@ -42,3 +42,11 @@ class UserAccount(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         return self.email
+
+
+class WishList(models.Model):
+    user = models.ForeignKey(UserAccount, on_delete=models.CASCADE)
+    event = models.CharField(max_length=255)
+
+    class Meta:
+        unique_together = ('user', 'event',)
