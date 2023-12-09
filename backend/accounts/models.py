@@ -46,7 +46,10 @@ class UserAccount(AbstractBaseUser, PermissionsMixin):
 
 class WishList(models.Model):
     user = models.ForeignKey(UserAccount, on_delete=models.CASCADE)
-    event = models.CharField(max_length=255)
+    event_title = models.CharField(max_length=255, unique=True)
+    event_image = models.CharField(max_length=255)
+    event_price = models.CharField(max_length=255)
+    event_redirecturl = models.CharField(max_length=255)
 
     class Meta:
-        unique_together = ('user', 'event',)
+        unique_together = ('user', 'event_title',)

@@ -14,5 +14,5 @@ class UserInfoSerializer(serializers.ModelSerializer):
 class WishListDataSerializer(serializers.ModelSerializer):
     class Meta:
         model = WishList
-        fields = ['user', 'event']
+        fields = '__all__'
         read_only_fields = ('user',)

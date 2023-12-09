@@ -56,7 +56,7 @@ class AddToWishList(generics.CreateAPIView):
 
     def post(self, request, *args, **kwargs):
         self.create(request, *args, **kwargs)
-        return Response(self.request.data['event'], status=status.HTTP_201_CREATED)
+        return Response(self.request.data['event_title'], status=status.HTTP_201_CREATED)
 
 
 class GetWishlistData(APIView):
