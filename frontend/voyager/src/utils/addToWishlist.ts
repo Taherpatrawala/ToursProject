@@ -8,9 +8,8 @@ interface cardDataInterface {
   redirectUrl: string;
 }
 
-const ACCESS_TOKEN = Cookies.get("ACCESS_TOKEN");
-
 export default async function addToWishlist(cardData: cardDataInterface) {
+  const ACCESS_TOKEN = Cookies.get("ACCESS_TOKEN");
   let message = "";
   await axios
     .post(
@@ -33,8 +32,8 @@ export default async function addToWishlist(cardData: cardDataInterface) {
       message = res.data;
     })
     .catch((err) => {
-      console.log(err.response.data.event_title[0]);
-      throw new Error(err.response.data.event_title[0]);
+      console.log(err.response.data);
+      throw new Error(err.response.data);
     });
   return message;
 }

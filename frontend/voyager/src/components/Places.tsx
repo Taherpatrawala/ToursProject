@@ -71,7 +71,7 @@ const Places = () => {
                         toast.promise(addToWishlist(card), {
                           loading: "Adding to Wishlist...",
                           success: (message) => `${message}`,
-                          error: (err) => ` ${err.message}`,
+                          error: (err) => ` ${err}`,
                         })
                       }
                     >

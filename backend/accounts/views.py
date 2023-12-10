@@ -55,6 +55,10 @@ class AddToWishList(generics.CreateAPIView):
         serializer.save(user=self.request.user)
 
     def post(self, request, *args, **kwargs):
+        wishlist = WishList.objects.filter(
+            user=self.request.user, event_title=self.request.data['event_title'])
+        if wishlist.exists():
+            return Response(f"{self.request.data['event_title']} is already in your wishlist", status=status.HTTP_400_BAD_REQUEST)
         self.create(request, *args, **kwargs)
         return Response(f"{self.request.data['event_title']} is now in your wishlist", status=status.HTTP_201_CREATED)
 

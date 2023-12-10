@@ -20,7 +20,6 @@ const Login = () => {
         dispatch(setToken(res.data));
         localStorage.setItem("access_token", res.data.access);
         Cookies.set("ACCESS_TOKEN", res.data.access, {
-          sameSite: "None",
           expires: 1,
         });
         Cookies.set("REFRESH_TOKEN", res.data.refresh, { expires: 14 });

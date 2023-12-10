@@ -3,6 +3,8 @@ import axios from "axios";
 import { useParams } from "react-router";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { FreeMode, Navigation, Thumbs } from "swiper/modules";
+import toast, { Toaster } from "react-hot-toast";
+import addToWishlist from "../utils/addToWishlist";
 import "swiper/css";
 import "swiper/css/free-mode";
 import "swiper/css/navigation";
@@ -13,6 +15,12 @@ const PlaceOverview = () => {
   const { tour, event } = useParams();
   const [overview, setOverview] = useState<any>();
   const [thumbsSwiper, setThumbsSwiper] = useState<any>(null);
+  const card = {
+    title: overview?.title,
+    image: overview?.images[0],
+    price: overview?.cost,
+    redirectUrl: `/${tour}/${event}`,
+  };
   console.log(tour, event);
 
   useEffect(() => {
@@ -85,7 +93,33 @@ const PlaceOverview = () => {
       </Swiper>
       <div className="">
         <p className="text-4xl font-bold text-center">{overview.title}</p>
-        <p className="text-3xl font-semibold text-center">{overview.cost}</p>
+        <div className="flex justify-center">
+          <p className="text-3xl font-semibold text-center">{overview.cost}</p>
+          <div className="flex justify-center items-center hover:bg-[#f37979] bg-opacity-40 rounded-full transition-all z-20 mx-3 p-1">
+            <p>Add to Wishlist </p>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth="1.5"
+              stroke="currentColor"
+              className={`w-6 h-6 hover:text-red-600 m-1  cursor-pointer `}
+              onClick={() =>
+                toast.promise(addToWishlist(card), {
+                  loading: "Adding to Wishlist...",
+                  success: (message) => `${message}`,
+                  error: (err) => ` ${err}`,
+                })
+              }
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"
+              />
+            </svg>
+          </div>
+        </div>
       </div>
 
       <div className="flex justify-center items-center w-[100vw]">
@@ -94,6 +128,7 @@ const PlaceOverview = () => {
           className="lg:w-[70vw] "
         ></div>
       </div>
+      <Toaster />
     </div>
   );
 };

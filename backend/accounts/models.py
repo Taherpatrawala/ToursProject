@@ -24,6 +24,7 @@ class UserAccountsManager(BaseUserManager):
 
 
 class UserAccount(AbstractBaseUser, PermissionsMixin):
+
     email = models.EmailField(max_length=255, unique=True)
     name = models.CharField(max_length=255)
     is_active = models.BooleanField(default=True)
@@ -46,7 +47,7 @@ class UserAccount(AbstractBaseUser, PermissionsMixin):
 
 class WishList(models.Model):
     user = models.ForeignKey(UserAccount, on_delete=models.CASCADE)
-    event_title = models.CharField(max_length=255, unique=True)
+    event_title = models.CharField(max_length=255)
     event_image = models.CharField(max_length=255)
     event_price = models.CharField(max_length=255)
     event_redirecturl = models.CharField(max_length=255)
