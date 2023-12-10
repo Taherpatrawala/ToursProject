@@ -56,7 +56,7 @@ class AddToWishList(generics.CreateAPIView):
 
     def post(self, request, *args, **kwargs):
         self.create(request, *args, **kwargs)
-        return Response(self.request.data['event_title'], status=status.HTTP_201_CREATED)
+        return Response(f"{self.request.data['event_title']} is now in your wishlist", status=status.HTTP_201_CREATED)
 
 
 class GetWishlistData(APIView):
@@ -66,10 +66,15 @@ class GetWishlistData(APIView):
     def get(self, request):
         user = self.request.user
 
-        Wishlists = WishList.objects.filter(user=user)
+        Wishlists = WishList.objects.filter(user=user).values()
+        print(f"{Wishlists}")
         userWishlist = []
         for wishlist in Wishlists:
-            userWishlist.append(wishlist.event)
+            print(f"{wishlist}")
+            for event_title, event_image, event_price, event_redirecturl in wishlist:
+                print(event_title)
+            userWishlist.append({event_title: wishlist.event_title, event_image: wishlist.event_image,
+                                event_price: wishlist.event_price, event_redirecturl: wishlist.event_redirecturl})
 
         print(userWishlist)
         return Response(userWishlist, status=status.HTTP_202_ACCEPTED)

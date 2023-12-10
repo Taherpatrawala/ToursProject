@@ -11,6 +11,7 @@ interface cardDataInterface {
 const ACCESS_TOKEN = Cookies.get("ACCESS_TOKEN");
 
 export default async function addToWishlist(cardData: cardDataInterface) {
+  let message = "";
   await axios
     .post(
       "http://127.0.0.1:8000/auth/addToWishlist/",
@@ -28,9 +29,12 @@ export default async function addToWishlist(cardData: cardDataInterface) {
       }
     )
     .then((res) => {
-      console.log(res);
+      console.log(res.data);
+      message = res.data;
     })
     .catch((err) => {
-      console.log(err.message);
+      console.log(err.response.data.event_title[0]);
+      throw new Error(err.response.data.event_title[0]);
     });
+  return message;
 }
