@@ -8,7 +8,7 @@ User = get_user_model()
 class UserInfoSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['name', 'email']
+        fields = ['name', 'email', 'profileImage']
 
 
 class WishListDataSerializer(serializers.ModelSerializer):

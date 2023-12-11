@@ -8,17 +8,18 @@ const SignUp = () => {
     password: "",
     password2: "",
   });
+  const [pfp, setPfp] = useState<File>();
 
   const handleSignUp = async () => {
     const config = {
       headers: {
-        "Content-Type": "application/json",
+        "Content-Type": "multipart/form-data",
       },
     };
     try {
       const res = await axios.post(
         "http://127.0.0.1:8000/auth/signup/",
-        signUpData,
+        { ...signUpData, profileImage: pfp },
         config
       );
       console.log(res.data);
@@ -121,6 +122,21 @@ const SignUp = () => {
                       });
                     }}
                     placeholder="••••••••"
+                    className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  />
+                </div>
+                <div>
+                  <label
+                    htmlFor="Profile picture"
+                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                  >
+                    Profile Picture
+                  </label>
+                  <input
+                    type="file"
+                    name="profileImage"
+                    id="profileImage"
+                    onChange={(e) => setPfp(e.target.files[0])}
                     className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   />
                 </div>

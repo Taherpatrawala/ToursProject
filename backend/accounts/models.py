@@ -1,15 +1,19 @@
 from django.db import models
+from django.core.files.base import ContentFile
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
 
 
 class UserAccountsManager(BaseUserManager):
-    def create_user(self, email, name, password=None):
+    def create_user(self, email, name, profileImage, password=None):
         if not email:
             raise ValueError('User must have a email address')
 
         email = self.normalize_email(email)
         user = self.model(email=email, name=name)
         user.set_password(password)
+        if profileImage:
+            user.profileImage.save(
+                profileImage.name, ContentFile(profileImage.read()))
         user.save()
 
         return user
@@ -27,6 +31,8 @@ class UserAccount(AbstractBaseUser, PermissionsMixin):
 
     email = models.EmailField(max_length=255, unique=True)
     name = models.CharField(max_length=255)
+    profileImage = models.ImageField(
+        null=True, blank=True, upload_to='profilepic/')
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
 
@@ -48,9 +54,9 @@ class UserAccount(AbstractBaseUser, PermissionsMixin):
 class WishList(models.Model):
     user = models.ForeignKey(UserAccount, on_delete=models.CASCADE)
     event_title = models.CharField(max_length=255)
-    event_image = models.CharField(max_length=255)
+    event_image = models.CharField(max_length=500)
     event_price = models.CharField(max_length=255)
-    event_redirecturl = models.CharField(max_length=255)
+    event_redirecturl = models.CharField(max_length=300)
 
     class Meta:
         unique_together = ('user', 'event_title',)

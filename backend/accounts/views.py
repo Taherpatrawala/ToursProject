@@ -21,6 +21,7 @@ class SignUpView(APIView):
         email = data['email']
         password = data['password']
         password2 = data['password2']
+        profileImage = data.get('profileImage')
 
         if password == password2:
             if User.objects.filter(email=email).exists():
@@ -30,7 +31,7 @@ class SignUpView(APIView):
                     return Response({'message': 'Password must be atleast 6 characters long!'})
                 else:
                     user = User.objects.create_user(
-                        email=email, password=password, name=name)
+                        email=email, password=password, name=name, profileImage=profileImage)
                     user.save()
                     return Response({'message': 'User created succesfully'}, status=status.HTTP_201_CREATED)
         else:

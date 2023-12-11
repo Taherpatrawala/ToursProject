@@ -1,10 +1,11 @@
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../store/store";
 import Cookies from "js-cookie";
 import addToWishlist from "../utils/addToWishlist";
 import toast, { Toaster } from "react-hot-toast";
+import { useNavigate } from "react-router";
 const Places = () => {
   const [scrapedData, setScrapedData] = useState<any>();
   const [placeName, setPlaceName] = useState<string>("");
@@ -13,6 +14,11 @@ const Places = () => {
   // );
   //const atoken: any = localStorage.getItem("access_token");
   const ACCESS_TOKEN = Cookies.get("ACCESS_TOKEN");
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    ACCESS_TOKEN ? null : navigate("/login");
+  }, []);
   const handleScrape = async () => {
     await axios
       .post(
