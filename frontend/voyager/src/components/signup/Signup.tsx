@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useState } from "react";
+import { useNavigate } from "react-router";
 
 const SignUp = () => {
   const [signUpData, setSignUpData] = useState({
@@ -9,6 +10,7 @@ const SignUp = () => {
     password2: "",
   });
   const [pfp, setPfp] = useState<File>();
+  const navigate = useNavigate();
 
   const handleSignUp = async () => {
     const config = {
@@ -17,12 +19,16 @@ const SignUp = () => {
       },
     };
     try {
-      const res = await axios.post(
-        "http://127.0.0.1:8000/auth/signup/",
-        { ...signUpData, profileImage: pfp },
-        config
-      );
-      console.log(res.data);
+      await axios
+        .post(
+          "http://127.0.0.1:8000/auth/signup/",
+          { ...signUpData, profileImage: pfp },
+          config
+        )
+        .then((res) => {
+          console.log(res);
+          navigate("/login");
+        });
     } catch (err: any) {
       console.log(err.message);
     }

@@ -1,7 +1,8 @@
 import { configureStore } from "@reduxjs/toolkit";
 import tokensSlice from "../Slices/tokensSlice";
+import userDataSlice from "../Slices/userDataSlice";
 const store = configureStore({
-  reducer: { tokens: tokensSlice },
+  reducer: { tokens: tokensSlice, userData: userDataSlice },
 });
 
 export type RootState = ReturnType<typeof store.getState>;
