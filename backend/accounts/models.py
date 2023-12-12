@@ -58,5 +58,8 @@ class WishList(models.Model):
     event_price = models.CharField(max_length=255)
     event_redirecturl = models.CharField(max_length=300)
 
+    def deleteWishlistItem(self):
+        return self.delete()
+
     class Meta:
         unique_together = ('user', 'event_title',)

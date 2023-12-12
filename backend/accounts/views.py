@@ -100,3 +100,17 @@ def getAllWishlist(request):
     # context = {"wishlists": wishlists}
     # return render(request, 'wishlist/index.html', context)
     return Response(wishlists, status=status.HTTP_200_OK)
+
+
+@api_view(['DELETE'])
+@permission_classes([permissions.IsAuthenticated])
+def deleteWishlist(request):
+    user = request.user
+    id = request.data.get('id')
+    try:
+        wishlist_item = WishList.objects.get(user=user, id=id)
+        # wishlist_item.delete() #you could have just done this but juts wanted to learn about model methods
+        wishlist_item.deleteWishlistItem()
+        return Response('Item Deleted from your wishlist', status=status.HTTP_202_ACCEPTED)
+    except:
+        return Response('Error occured while deleting the item ', status=status.HTTP_404_NOT_FOUND)
