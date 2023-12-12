@@ -1,6 +1,7 @@
 import { useSelector } from "react-redux/es/hooks/useSelector";
 import { RootState } from "../../store/store";
 import { useState } from "react";
+import { NavLink } from "react-router-dom";
 const Navbar = () => {
   const userData = useSelector((state: RootState) => state.userData);
   const [toggle, setToggle] = useState<boolean>(false);
@@ -58,12 +59,12 @@ const Navbar = () => {
               </div>
               <ul className="py-2" aria-labelledby="user-menu-button">
                 <li>
-                  <a
-                    href="#"
+                  <NavLink
+                    to="/wishlist"
                     className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
                   >
-                    Dashboard
-                  </a>
+                    Wishlist
+                  </NavLink>
                 </li>
                 <li>
                   <a

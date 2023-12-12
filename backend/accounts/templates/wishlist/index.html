@@ -1,0 +1,10 @@
+{%if wishlists%}
+<ul>
+  {%for wishlist in wishlists%}
+  <li>User: {{wishlist.user_id}}</li>
+  <li>Event: {{wishlist.event_title}}</li>
+  {% endfor %}
+</ul>
+{% else %}
+<h1>Template not properly set bro :/</h1>
+{% endif %}

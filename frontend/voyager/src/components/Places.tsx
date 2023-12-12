@@ -60,7 +60,7 @@ const Places = () => {
       </div>
       <div className="">
         {scrapedData?.data?.sections.map((section: any) => {
-          const card = section.cards?.map((card: any) => {
+          const cards = section.cards?.map((card: any) => {
             return (
               <div className="md:w-[20vw] md:h-[65vh] m-4 rounded-md overflow-clip shadow-sm shadow-[#4f4e4e]">
                 <div className="relative">
@@ -105,7 +105,7 @@ const Places = () => {
           return (
             <div className="">
               <h1 className="text-4xl font-bold">{section.heading}</h1>
-              <div className="flex overflow-scroll">{card}</div>
+              <div className="flex overflow-scroll">{cards}</div>
             </div>
           );
         })}

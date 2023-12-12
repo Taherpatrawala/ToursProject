@@ -3,6 +3,7 @@ from rest_framework import generics
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.views import APIView
+from rest_framework.decorators import api_view, permission_classes
 from django.contrib.auth import get_user_model
 from rest_framework import permissions
 from .serializers import UserInfoSerializer, WishListDataSerializer
@@ -74,7 +75,7 @@ class GetWishlistData(APIView):
         Wishlists = WishList.objects.filter(user=user).values()
         print(f"{Wishlists}")
         userWishlist = []
-        for wishlist in Wishlists:
+        for wishlist in Wishlists:  # you didnt need to do this since .values() returns a dict already
             print(f"{wishlist}")
             for event_title, event_image, event_price, event_redirecturl in wishlist:
                 print(event_title)
@@ -83,3 +84,19 @@ class GetWishlistData(APIView):
 
         print(userWishlist)
         return Response(userWishlist, status=status.HTTP_202_ACCEPTED)
+
+# same thing as above but with function based view
+
+
+@api_view(['GET'])
+@permission_classes([permissions.IsAuthenticated])
+def getAllWishlist(request):
+    user = request.user
+    print(user.name)
+    wishlists = WishList.objects.filter(user=user).values()
+    # print(wishlists)
+    # for wishlist in wishlists:
+    # print({'user: ': wishlist.user_id, 'title: ': wishlist.event_title})
+    # context = {"wishlists": wishlists}
+    # return render(request, 'wishlist/index.html', context)
+    return Response(wishlists, status=status.HTTP_200_OK)
