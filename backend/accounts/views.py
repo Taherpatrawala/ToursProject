@@ -4,10 +4,12 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.decorators import api_view, permission_classes
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model
 from rest_framework import permissions
 from .serializers import UserInfoSerializer, WishListDataSerializer
-from .models import WishList
+from .models import WishList, Reviews
+
 
 User = get_user_model()
 # Create your views here.
@@ -114,3 +116,17 @@ def deleteWishlist(request):
         return Response('Item Deleted from your wishlist', status=status.HTTP_202_ACCEPTED)
     except:
         return Response('Error occured while deleting the item ', status=status.HTTP_404_NOT_FOUND)
+
+
+@api_view(['POST'])
+@permission_classes([permissions.IsAuthenticated])
+@login_required
+def add_review(request):
+    user = request.user
+    review = request.data.get('review')
+    event_title = request.data.get('event_title')
+    review_image = request.data.get('review_image')
+    review_in_db = Reviews(user=user, event_title=event_title,
+                           review=review, review_images=review_image)
+    review_in_db.save()
+    return Response('Review added succesfully', status=status.HTTP_201_CREATED)

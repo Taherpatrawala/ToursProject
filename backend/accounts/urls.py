@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.urls import path, include
-from accounts.views import SignUpView, GetUserDataView, AddToWishList, GetWishlistData, getAllWishlist, deleteWishlist
+from accounts.views import SignUpView, GetUserDataView, AddToWishList, GetWishlistData, getAllWishlist, deleteWishlist, add_review
 
 urlpatterns = [
     path('signup/', SignUpView.as_view(), name='signup'),
@@ -8,6 +8,7 @@ urlpatterns = [
     path('addToWishlist/', AddToWishList.as_view(), name='wishlist'),
     path('getWishlistData/', GetWishlistData.as_view(), name='wishlistData'),
     path('getWishlist/', getAllWishlist, name='getAllWishlist'),
-    path('deleteWishlist/', deleteWishlist, name='deleteWishlist')
+    path('deleteWishlist/', deleteWishlist, name='deleteWishlist'),
+    path('addReview/', add_review, name='add_review'),
 
 ]

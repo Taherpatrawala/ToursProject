@@ -63,3 +63,17 @@ class WishList(models.Model):
 
     class Meta:
         unique_together = ('user', 'event_title',)
+
+
+class Reviews(models.Model):
+    user = models.ForeignKey(UserAccount, on_delete=models.CASCADE)
+    event_title = models.CharField(max_length=255)
+    review = models.CharField(max_length=300)
+    review_date = models.DateField(auto_now=True)
+    review_images = models.ImageField(
+        null=True, blank=True, upload_to='review_images/')
+
+    class Meta:
+        order_with_respect_to = 'user'
+        models.UniqueConstraint(
+            fields=['user', 'event_title'], name='unique_review')
