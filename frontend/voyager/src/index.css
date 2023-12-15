@@ -6,6 +6,10 @@
     display: none;
 }
 
+.read-more-content{
+  max-height: max-content!important;
+}
+
 html,body{
   background-color: beige;
 }

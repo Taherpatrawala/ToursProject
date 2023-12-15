@@ -41,12 +41,13 @@ class ScrapedDataView2(APIView):
 
     def post(self, request, format=None):
         placeName = request.data['placeName']
-        url = f"https://www.thrillophilia.com/listings/search?destination_slug=&search={placeName}"
+        url = f"https://www.thrillophilia.com/listings/search?search={placeName}"
         response = requests.get(url)
         # print(response.text)
 
         if response.status_code == 200:
             html_content = response.text
+            print(html_content)
             soup = BeautifulSoup(html_content, 'html.parser')
             dom = etree.HTML(str(soup))
             # description1 = dom.xpath(

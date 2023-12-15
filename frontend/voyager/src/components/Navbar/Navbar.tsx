@@ -31,6 +31,8 @@ const Navbar = () => {
               onClick={() => {
                 setToggle((toggle) => !toggle);
               }}
+              onMouseEnter={() => setToggle(true)}
+              onMouseLeave={() => setToggle(false)}
               aria-expanded="false"
               data-dropdown-toggle="user-dropdown"
               data-dropdown-placement="bottom"
@@ -44,9 +46,9 @@ const Navbar = () => {
             </button>
 
             <div
-              className={`z-50 ${
-                toggle ? "h-max" : "h-0 w-0"
-              } absolute top-6 right-4 transition-all duration-300 overflow-hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600`}
+              className={`z-50  hover:h-max p-3 py-0 -translate-y-2 translate-x-2  ${
+                toggle ? "h-min" : null
+              } h-0  absolute top-6 right-4 transition-all duration-300 overflow-hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600`}
               id="user-dropdown"
             >
               <div className="px-4 py-3">
