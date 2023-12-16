@@ -7,7 +7,7 @@ from rest_framework.decorators import api_view, permission_classes
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model
 from rest_framework import permissions
-from .serializers import UserInfoSerializer, WishListDataSerializer
+from .serializers import UserInfoSerializer, WishListDataSerializer, ReviewSerializer
 from .models import WishList, Reviews
 
 
@@ -96,7 +96,7 @@ def getAllWishlist(request):
     user = request.user
     print(user.name)
     wishlists = WishList.objects.filter(user=user).values()
-    # print(wishlists)
+    print(wishlists)
     # for wishlist in wishlists:
     # print({'user: ': wishlist.user_id, 'title: ': wishlist.event_title})
     # context = {"wishlists": wishlists}
@@ -130,3 +130,34 @@ def add_review(request):
                            review=review, review_images=review_image)
     review_in_db.save()
     return Response('Review added succesfully', status=status.HTTP_201_CREATED)
+
+
+@api_view(['GET'])
+@permission_classes([permissions.AllowAny])
+def get_all_reviews(request):
+    user = request.user
+    event_title = request.GET.get('event_title')
+    try:
+        review_instance = Reviews.objects.filter(
+            event_title=event_title).values()
+        # print(review_instance)
+        new_review_instance = []
+        for review in review_instance:
+            print(review)
+            user_data = User.objects.filter(
+                id=review['user_id']).values()
+
+            def getUserData(user):
+                name = user['name']
+                profilepic = user['profileImage']
+                return {"name": name, "profileImage": profilepic}
+            user_data = list(map(lambda user: getUserData(user), user_data))
+            print(user_data[0])
+            review.update(user_data[0])
+            print(review)
+            new_review_instance.append(review)
+        review_serialzer = ReviewSerializer(review_instance)
+        # print('serializer->', review_serialzer.data)
+        return Response(new_review_instance, status=status.HTTP_200_OK)
+    except:
+        return Response("No Reviews Yet", status=status.HTTP_404_NOT_FOUND)

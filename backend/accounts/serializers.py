@@ -1,6 +1,6 @@
 from django.contrib.auth import get_user_model
 from rest_framework import serializers
-from .models import WishList
+from .models import WishList, Reviews
 
 User = get_user_model()
 
@@ -16,3 +16,9 @@ class WishListDataSerializer(serializers.ModelSerializer):
         model = WishList
         fields = '__all__'
         read_only_fields = ('user',)
+
+
+class ReviewSerializer(serializers.ModelSerializer):
+    class Meta:
+        model: Reviews
+        fields = '__al__'
