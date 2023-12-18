@@ -20,5 +20,5 @@ class WishListDataSerializer(serializers.ModelSerializer):
 
 class ReviewSerializer(serializers.ModelSerializer):
     class Meta:
-        model: Reviews
-        fields = '__al__'
+        model = Reviews
+        fields = ['event_title', 'review']

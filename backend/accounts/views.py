@@ -9,6 +9,7 @@ from django.contrib.auth import get_user_model
 from rest_framework import permissions
 from .serializers import UserInfoSerializer, WishListDataSerializer, ReviewSerializer
 from .models import WishList, Reviews
+from emails.utils import send_welcome_email
 
 
 User = get_user_model()
@@ -36,6 +37,11 @@ class SignUpView(APIView):
                     user = User.objects.create_user(
                         email=email, password=password, name=name, profileImage=profileImage)
                     user.save()
+                    try:
+                        send_welcome_email.send_welcome_email(name, email)
+                    except:
+                        None
+
                     return Response({'message': 'User created succesfully'}, status=status.HTTP_201_CREATED)
         else:
             return Response({'message': 'Passwords do not match'})
@@ -137,6 +143,9 @@ def add_review(request):
 def get_all_reviews(request):
     user = request.user
     event_title = request.GET.get('event_title')
+    # reviewo = Reviews.objects.all()
+    # review_serialzer = ReviewSerializer(reviewo, many=True)
+    # print('serializer->', review_serialzer.data[0]['event_title'])
     try:
         review_instance = Reviews.objects.filter(
             event_title=event_title).values()
@@ -156,8 +165,7 @@ def get_all_reviews(request):
             review.update(user_data[0])
             print(review)
             new_review_instance.append(review)
-        review_serialzer = ReviewSerializer(review_instance)
-        # print('serializer->', review_serialzer.data)
+
         return Response(new_review_instance, status=status.HTTP_200_OK)
     except:
         return Response("No Reviews Yet", status=status.HTTP_404_NOT_FOUND)

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Welcome to Our Project</title>
+    <style>
+      body {
+        font-family: "Arial", sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 0;
+      }
+
+      .container {
+        max-width: 600px;
+        margin: 0 auto;
+        background-color: #ffffff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+
+      h1 {
+        color: #333;
+      }
+
+      p {
+        color: #555;
+        line-height: 1.6;
+      }
+
+      .cta-button {
+        display: inline-block;
+        padding: 10px 20px;
+        cursor: pointer;
+        background-color: #007bff;
+        color: white;
+        text-decoration: none;
+        border-radius: 4px;
+        margin-top: 20px;
+      }
+
+      .footer {
+        margin-top: 30px;
+        font-size: 12px;
+        color: #888;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1
+        style="
+          color: #eb392d;
+          background-color: #fff561;
+          border-radius: 10px;
+          text-align: center;
+        "
+      >
+        Welcome to Voyager
+      </h1>
+      <p>Dear {{username}},</p>
+      <p>
+        We are thrilled to welcome you to our community. Thank you for joining
+        us on this exciting journey. Here are a few things you can do:
+      </p>
+      <ul>
+        <li>Explore our features and services.</li>
+        <li>Connect with other members.</li>
+        <li>Stay updated with our latest updates and news.</li>
+      </ul>
+      <p>
+        Feel free to reach out if you have any questions or need assistance.
+      </p>
+      <a href="{{app_url}}" class="cta-button" style="color: white"
+        >Get Started</a
+      >
+      <p class="footer">Best Regards,<br />Team Voyager</p>
+    </div>
+  </body>
+</html>
