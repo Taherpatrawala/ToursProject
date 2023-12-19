@@ -1,3 +1,4 @@
+import asyncio
 from django.shortcuts import render
 from rest_framework import generics
 from rest_framework.response import Response
@@ -37,10 +38,10 @@ class SignUpView(APIView):
                     user = User.objects.create_user(
                         email=email, password=password, name=name, profileImage=profileImage)
                     user.save()
-                    try:
+
+                    asyncio.create_task(
                         send_welcome_email.send_welcome_email(name, email)
-                    except:
-                        None
+                    )
 
                     return Response({'message': 'User created succesfully'}, status=status.HTTP_201_CREATED)
         else:
