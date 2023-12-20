@@ -39,9 +39,7 @@ class SignUpView(APIView):
                         email=email, password=password, name=name, profileImage=profileImage)
                     user.save()
 
-                    asyncio.create_task(
-                        send_welcome_email.send_welcome_email(name, email)
-                    )
+                    send_welcome_email.send_welcome_email(name, email)
 
                     return Response({'message': 'User created succesfully'}, status=status.HTTP_201_CREATED)
         else:
