@@ -37,7 +37,7 @@ class ScrapedDataView(APIView):
 
 
 class ScrapedDataView2(APIView):
-    # permission_classes = (permissions.AllowAny,)
+    permission_classes = (permissions.AllowAny,)
 
     def post(self, request, format=None):
         placeName = request.data['placeName']
@@ -53,19 +53,23 @@ class ScrapedDataView2(APIView):
             # description1 = dom.xpath(
             #    "/html/body/div/div/main/section[1]/div/div/div/div/div/p")[0].text
             # print(description1)
-            locationName = soup.find(
-                'div', 'intro-top-content').find('h1', 'title').text
-            backgroundImage = soup.find(
-                'picture', 'bg-image').find('img')['srcset']
-            description = str(soup.find('section', 'destination-description'))
-            sections = soup.find_all('section', 'tour-section')
+            # locationName = soup.find(
+            #    'div', 'intro-top-content').find('h1', 'title').text
+            # backgroundImage = soup.find(
+            #    'picture', 'bg-image').find('img')['srcset']
+            # description = str(soup.find('section', 'destination-description'))
+
+            sections = soup.find_all('div', 'container')
 
             def cardDataHandler(card):
 
-                cardImage = card.find('img', 'lazy-image')['data-src']
-                cardTitle = card.find('a', 'title').text
-                cardPrice = card.find('span', 'current-price').text
-                cardRedirectUrl = card['data-href']
+                cardImage = card.find('img', 'gm-observing')['src']
+                cardTitle = card.find(
+                    'h3', 'productCard_name__G3d6e productCard_fixedNameHeight__6hLfq')
+                cardPrice = card.find(
+                    'div', 'productCard_actualPrice__L96rh').text
+                cardRedirectUrl = card.find(
+                    'a', 'productCard_container__aeQWM')['href']
                 cardDetails = {
                     'image': cardImage,
                     'title': cardTitle,
@@ -75,8 +79,9 @@ class ScrapedDataView2(APIView):
                 return cardDetails
 
             def handleSectionData(section):
-                sectionHeading = section.find('span', 'section-heading').text
-                sectionCards = section.find_all('div', 'tour-card')
+                sectionHeading = section.find(
+                    'h1', 'ListingPageHeader_mainHeading__nFqKH')
+                sectionCards = section.find_all('div', 'slick-slide')
                 cardsList = list(
                     (map(lambda card: cardDataHandler(card), sectionCards)))
                 sectionData = {
@@ -89,10 +94,10 @@ class ScrapedDataView2(APIView):
                 map(lambda section: handleSectionData(section), sections))
 
             # print(cardsList)
-            data = {'locationName': locationName, 'backgroundImage': backgroundImage,
-                    'description': description, 'sections': sectionDataList}
+            # data = {'locationName': locationName, 'backgroundImage': backgroundImage,
+            #        'description': description, 'sections': sectionDataList}
 
-            return JsonResponse(data, status=status.HTTP_200_OK, safe=False)
+            return JsonResponse(sectionDataList, status=status.HTTP_200_OK, safe=False)
         else:
             return HttpResponse({'msg': 'error'}, status=status.HTTP_400_BAD_REQUEST)
 
