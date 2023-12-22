@@ -30,6 +30,7 @@ urlpatterns = [
     path('api/accounts/', include('accounts.urls')),
     path('api/scrape/', include('scraper.urls')),
     path('emails/', include('emails.urls')),
+    path('bookings/', include('bookings.urls'))
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 urlpatterns += [re_path(r'^.*',

@@ -65,11 +65,10 @@ class ScrapedDataView2(APIView):
 
                 cardImage = card.find('img', 'gm-observing')['src']
                 cardTitle = card.find(
-                    'h3', 'productCard_name__G3d6e productCard_fixedNameHeight__6hLfq')
+                    'h3', 'productCard_name__G3d6e')
                 cardPrice = card.find(
                     'div', 'productCard_actualPrice__L96rh').text
-                cardRedirectUrl = card.find(
-                    'a', 'productCard_container__aeQWM')['href']
+                cardRedirectUrl = card['href']
                 cardDetails = {
                     'image': cardImage,
                     'title': cardTitle,
@@ -81,7 +80,8 @@ class ScrapedDataView2(APIView):
             def handleSectionData(section):
                 sectionHeading = section.find(
                     'h1', 'ListingPageHeader_mainHeading__nFqKH')
-                sectionCards = section.find_all('div', 'slick-slide')
+                sectionCards = section.find_all(
+                    'a', 'productCard_container__aeQWM')
                 cardsList = list(
                     (map(lambda card: cardDataHandler(card), sectionCards)))
                 sectionData = {
