@@ -1,13 +1,12 @@
 from django.db import models
 from django.contrib.auth import get_user_model
+from accounts.models import UserAccount
 
 # Create your models here.
 
-USER = get_user_model()
-
 
 class Booking(models.Model):
-    user = models.ManyToManyField(USER)
+    user = models.ManyToManyField(UserAccount)
     event_title = models.CharField(max_length=255)
     event_redirecturl = models.CharField(max_length=300)
     event_price = models.CharField(max_length=255)

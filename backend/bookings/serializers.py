@@ -3,8 +3,7 @@ from .models import Booking
 
 
 class BookingsSerializers(serializers.ModelSerializer):
-    model = Booking
-    fields = '__all__'
-
     class Meta:
+        model = Booking
+        fields = '__all__'
         unique_together = ('user', 'event_title')
