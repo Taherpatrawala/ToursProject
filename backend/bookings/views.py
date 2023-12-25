@@ -30,3 +30,13 @@ def get_booking_details(request):
     user_booking_data = BookingsSerializers(user_booking_instance, many=True)
 
     return Response(user_booking_data.data, status=status.HTTP_200_OK)
+
+
+@api_view(['DELETE'])
+@permission_classes([permissions.IsAuthenticated])
+def cancel_booking(request):
+    user = request.user.id
+    user_booking_instance = Booking.objects.filter(
+        user=user, event_title=request.data['event_title'])
+    user_booking_instance.delete()
+    return Response(f'Your booking has been cancelled..', status=status.HTTP_204_NO_CONTENT)
