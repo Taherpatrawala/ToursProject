@@ -128,3 +128,16 @@ class ScrapeIndividualEventData(APIView):
             return JsonResponse(data, status=status.HTTP_200_OK, safe=False)
         else:
             return HttpResponse({'msg': 'error'}, status=status.HTTP_400_BAD_REQUEST)
+
+
+class GetAutoCompleteList(APIView):
+    permission_classes = (permissions.IsAuthenticated,)
+
+    def post(self, request):
+        placeName = request.data['placeName']
+        response = requests.get(
+            f"https://www.holidify.com/rest/search/getSearchResultsMain.hdfy?placeID=ZURICH&query={placeName}")
+        if response.status_code == 200:
+            return HttpResponse(response, status=status.HTTP_200_OK)
+        else:
+            return HttpResponse({'msg': 'error'}, status=status.HTTP_400_BAD_REQUEST)

@@ -9,6 +9,7 @@ import Card from "./Card";
 const Places = () => {
   const [scrapedData, setScrapedData] = useState<any>();
   const [placeName, setPlaceName] = useState<string>("");
+  const [autoName, setAutoName] = useState<string>("");
   const ACCESS_TOKEN = Cookies.get("ACCESS_TOKEN");
   const navigate = useNavigate();
 
@@ -31,13 +32,36 @@ const Places = () => {
       .then(() => console.log())
       .catch((err) => console.log(err.message));
   };
+  const getAutoCompleteList = async () => {
+    await axios
+      .post(
+        "http://localhost:8000/api/scrape/getAutocompleteData/",
+        {
+          placeName: placeName,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${ACCESS_TOKEN}`,
+          },
+        }
+      )
+      .then((res: any) => setAutoName(res.data.autocompleteList[0].name))
+      .then(() => console.log(autoName))
+      .catch((error) => {
+        console.error("Autocomplete error:", error.message);
+      });
+  };
 
   return (
     <div>
       <input
         type="text"
         value={placeName}
-        onChange={(e) => setPlaceName(e.target.value)}
+        onChange={(e) => {
+          setPlaceName(e.target.value);
+          getAutoCompleteList();
+        }}
         onKeyDown={(e) => (e.key === "Enter" ? handleScrape() : null)}
         className="border-2 border-red-300"
       />
