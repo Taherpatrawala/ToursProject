@@ -1,7 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import { RootState } from "../store/store";
+
 import Cookies from "js-cookie";
 
 import { useNavigate } from "react-router";
@@ -9,7 +8,7 @@ import Card from "./Card";
 const Places = () => {
   const [scrapedData, setScrapedData] = useState<any>();
   const [placeName, setPlaceName] = useState<string>("");
-  const [autoName, setAutoName] = useState<string>("");
+  const [autoName, setAutoName] = useState();
   const ACCESS_TOKEN = Cookies.get("ACCESS_TOKEN");
   const navigate = useNavigate();
 
@@ -46,7 +45,18 @@ const Places = () => {
           },
         }
       )
-      .then((res: any) => setAutoName(res.data.autocompleteList[0].name))
+      .then((res: any) => {
+        const listItem = res.data.autocompleteList.filter((listItem) => {
+          return listItem.canonical.startsWith(
+            "https://www.holidify.com/places"
+          )
+            ? listItem
+            : null;
+        });
+        console.log("LOG", listItem[0]);
+
+        setAutoName(listItem[0]);
+      })
       .then(() => console.log(autoName))
       .catch((error) => {
         console.error("Autocomplete error:", error.message);
@@ -60,11 +70,20 @@ const Places = () => {
         value={placeName}
         onChange={(e) => {
           setPlaceName(e.target.value);
-          getAutoCompleteList();
+          setTimeout(getAutoCompleteList, 0);
         }}
         onKeyDown={(e) => (e.key === "Enter" ? handleScrape() : null)}
         className="border-2 border-red-300"
       />
+      <select
+        value={autoName?.name}
+        onChange={(e) => {
+          setAutoName({ ...autoName, name: e.target.value });
+          setPlaceName(e.target.value);
+        }}
+      >
+        {autoName && <option value={autoName.name}>{autoName.name}</option>}
+      </select>
       <button onClick={handleScrape} className="border">
         Get Data
       </button>
