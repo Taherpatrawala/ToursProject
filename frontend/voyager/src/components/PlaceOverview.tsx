@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams } from "react-router";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { FreeMode, Navigation, Thumbs } from "swiper/modules";
+import { Autoplay, FreeMode, Navigation, Thumbs } from "swiper/modules";
 import toast, { Toaster } from "react-hot-toast";
 import addToWishlist from "../utils/addToWishlist";
 import "swiper/css";
@@ -12,6 +12,7 @@ import "swiper/css/thumbs";
 
 import "../index.css";
 import ReviewInput from "./ReviewSection/ReviewInput";
+import { delay } from "@reduxjs/toolkit/dist/utils";
 const PlaceOverview = () => {
   const { tour, event } = useParams();
   const [overview, setOverview] = useState<any>();
@@ -30,7 +31,7 @@ const PlaceOverview = () => {
         const res = await axios.post(
           "http://127.0.0.1:8000/api/scrape/event/",
           {
-            redirectUrl: `/${tour}/${event}`,
+            redirectUrl: `/${tour}.html?placeCode=${event}`,
           }
         );
         setOverview(res.data);
@@ -52,6 +53,12 @@ const PlaceOverview = () => {
         <Swiper
           spaceBetween={10}
           navigation={true}
+          autoplay={{
+            delay: 3000,
+            stopOnLastSlide: false,
+            disableOnInteraction: false,
+          }}
+          loop={true}
           style={{
             "--swiper-navigation-color": "#000",
           }}
@@ -59,7 +66,7 @@ const PlaceOverview = () => {
             swiper:
               thumbsSwiper && !thumbsSwiper.destroyed ? thumbsSwiper : null,
           }}
-          modules={[FreeMode, Navigation, Thumbs]}
+          modules={[Autoplay, FreeMode, Navigation, Thumbs]}
           className="mySwiper2  md:h-[80vh]"
         >
           {overview?.images?.map((image: string) => {

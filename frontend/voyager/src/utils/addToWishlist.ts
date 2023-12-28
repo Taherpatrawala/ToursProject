@@ -15,7 +15,7 @@ export default async function addToWishlist(cardData: cardDataInterface) {
     .post(
       "http://127.0.0.1:8000/auth/addToWishlist/",
       {
-        event_title: cardData.title,
+        event_title: cardData.title.trim(),
         event_image: cardData.image,
         event_price: cardData.price,
         event_redirecturl: cardData.redirectUrl,

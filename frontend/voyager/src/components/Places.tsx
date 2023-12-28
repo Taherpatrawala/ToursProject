@@ -91,33 +91,25 @@ const Places = () => {
       </button>
       <div className="relative">
         <img
-          src={scrapedData?.data?.backgroundImage}
+          src={scrapedData?.data?.images[0]}
           alt=""
           className="w-[100vw] object-cover h-[58vh]"
         />
         <p className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-6xl font-bold text-white">
-          {scrapedData?.data.locationName}
+          Name
         </p>
       </div>
       <div className="">
-        {scrapedData?.data?.sections.map((section: any) => {
-          const cards = section.cards?.map((card: any) => {
-            return (
-              <Card
-                event_id={0}
-                image={card.event_image}
-                title={card.event_title}
-                price={card.event_price}
-                redirectUrl={card.event_redirecturl}
-                wishlistComponent={false}
-              />
-            );
-          });
+        {scrapedData?.data?.cards.map((card: any) => {
           return (
-            <div className="">
-              <h1 className="text-4xl font-bold">{section.heading}</h1>
-              <div className="flex overflow-scroll">{cards}</div>
-            </div>
+            <Card
+              event_id={0}
+              image={card.image}
+              title={card.title}
+              price={card.price}
+              redirectUrl={card.redirectUrl}
+              wishlistComponent={false}
+            />
           );
         })}
       </div>

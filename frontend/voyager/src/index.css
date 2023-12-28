@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-.read-more-btn{
+.morelink{
     display: none;
 }
 

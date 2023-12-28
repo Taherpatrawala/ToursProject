@@ -58,7 +58,7 @@ class ScrapedDataView(APIView):
                         'p', 'price').text
                     cardId = card['dataid']
                     cardurlTitle = remove_special_characters(cardTitle)
-                    cardurl = f"https://holidify.com/package/{cardurlTitle.lstrip().replace(' ','-').lower()}{cardId}.html?placeCode={place_name}"
+                    cardurl = f"/{cardurlTitle.lstrip().replace(' ','-').lower()}{cardId}/{place_name}"
                     cardRedirectUrl = cardurl
                     cardDetails = {
                         'image': cardImage,
@@ -152,19 +152,24 @@ class ScrapeIndividualEventData(APIView):
     def post(self, request, format=None):
         redirectUrl = request.data['redirectUrl']
         response = requests.get(
-            f"https://www.thrillophilia.com{redirectUrl}")
+            f"https://www.holidify.com/package/{redirectUrl}")
 
         if response.status_code == 200:
             html_content = response.text
             soup = BeautifulSoup(html_content, 'html.parser')
-            title = soup.find('h1', 'banner__title').text
-            imagesLinks = soup.find_all('img', 'banner__image')
+            packageDetails = soup.find('div', 'package-objective-details')
+            tripDuration = packageDetails.find('p', 'trip-duration').text
+            title = str(packageDetails.find('h1').text)
+            imagesLinks = soup.find_all(
+                'div', 'atf-image-holder')
             imageLinksList = list(
-                map(lambda image: image['src'], imagesLinks))
-            overview = str(soup.find('div', 'product-overview__details'))
-            cost = soup.find('div', 'pricing-wrap__current-price').text
+                map(lambda image: image['data-original'], imagesLinks))
+            print(imagesLinks)
+            overview = str(soup.find('div', 'inclusion-exclusion'))
+            cost = str(soup.find('div', 'price').text)
             data = {
                 'title': title,
+                'trip_duration': tripDuration,
                 'images': imageLinksList,
                 'overview': overview,
                 'cost': cost
