@@ -5,6 +5,8 @@ from django.http import JsonResponse, HttpResponse
 from rest_framework.views import APIView
 from rest_framework import status, permissions
 from lxml import etree
+from urllib.parse import urlparse
+import re
 
 # Create your views here.
 
@@ -13,9 +15,13 @@ class ScrapedDataView(APIView):
     permission_classes = (permissions.AllowAny,)
 
     def post(self, request, format=None):
-        placeName = request.data['placeName']
-        url = f"https://www.holidify.com/places/{placeName}/"
+        placeLink = request.data['placeLink']
+        url = placeLink
+        parsed_url = urlparse(url)
+        path_segments = parsed_url.path.split('/')
+        place_name = path_segments[-2]
         response = requests.get(url)
+        packages_resonse = requests.get(f"{url}packages.html")
 
         if response.status_code == 200:
             html_content = response.text
@@ -23,13 +29,51 @@ class ScrapedDataView(APIView):
             # print(soup.prettify())
             imagesData = soup.find_all('div', 'lazyBG', limit=6)
             # print(imagesData)
+
             imagesLinks = list(
                 map(lambda div: div['data-original'], imagesData))
+            card_data = None
             # print(imagesLinks)
             descriptionData = soup.find('div', 'readMoreText')
+            if packages_resonse.status_code == 200:
+                html_content2 = packages_resonse.text
+                soup2 = BeautifulSoup(html_content2, 'html.parser')
+                cards = soup2.find_all('div', 'inventory-card')
+
+                def remove_special_characters(input_string):
+                    # Define a regular expression pattern to match non-alphanumeric characters
+                    pattern = re.compile(r'[^a-zA-Z0-9\s]')
+
+                    # Use the pattern to replace special characters with an empty string
+                    result_string = re.sub(pattern, '', input_string)
+
+                    return result_string
+
+                def cardDataHandler(card):
+
+                    cardImage = card.find('img', 'lazy')['data-original']
+                    cardTitle = card.find(
+                        'div', 'inventory-details').find('h3', 'name').text
+                    cardPrice = card.find(
+                        'p', 'price').text
+                    cardId = card['dataid']
+                    cardurlTitle = remove_special_characters(cardTitle)
+                    cardurl = f"https://holidify.com/package/{cardurlTitle.lstrip().replace(' ','-').lower()}{cardId}.html?placeCode={place_name}"
+                    cardRedirectUrl = cardurl
+                    cardDetails = {
+                        'image': cardImage,
+                        'title': cardTitle,
+                        'price': cardPrice,
+                        'redirectUrl': cardRedirectUrl
+                    }
+                    return cardDetails
+
+                card_data = list(
+                    map(lambda card: cardDataHandler(card), cards))
             data = {
                 'images': imagesLinks,
-                'description': str(descriptionData)
+                'description': str(descriptionData),
+                'cards': card_data
             }
             return JsonResponse(data, status=status.HTTP_200_OK, safe=False)
         else:
