@@ -18,8 +18,8 @@ const Places = () => {
   const handleScrape = async () => {
     await axios
       .post(
-        "http://127.0.0.1:8000/api/scrape/2/",
-        { placeName: placeName },
+        "http://127.0.0.1:8000/api/scrape/",
+        { placeLink: autoName?.canonical },
         {
           headers: {
             "Content-Type": "application/json",
@@ -31,12 +31,12 @@ const Places = () => {
       .then(() => console.log())
       .catch((err) => console.log(err.message));
   };
-  const getAutoCompleteList = async () => {
+  const getAutoCompleteList = async (inputValue: string) => {
     await axios
       .post(
         "http://localhost:8000/api/scrape/getAutocompleteData/",
         {
-          placeName: placeName,
+          placeName: inputValue,
         },
         {
           headers: {
@@ -70,20 +70,22 @@ const Places = () => {
         value={placeName}
         onChange={(e) => {
           setPlaceName(e.target.value);
-          setTimeout(getAutoCompleteList, 0);
+          getAutoCompleteList(e.target.value);
         }}
         onKeyDown={(e) => (e.key === "Enter" ? handleScrape() : null)}
         className="border-2 border-red-300"
       />
       <select
-        value={autoName?.name}
+        value={placeName}
         onChange={(e) => {
-          setAutoName({ ...autoName, name: e.target.value });
           setPlaceName(e.target.value);
+          getAutoCompleteList(e.target.value);
         }}
       >
+        <option value="">Select place from here</option>
         {autoName && <option value={autoName.name}>{autoName.name}</option>}
       </select>
+
       <button onClick={handleScrape} className="border">
         Get Data
       </button>
