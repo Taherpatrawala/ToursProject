@@ -19,7 +19,7 @@ const Places = () => {
     await axios
       .post(
         "http://127.0.0.1:8000/api/scrape/",
-        { placeLink: autoName?.canonical },
+        { placeLink: autoName[0]?.canonical },
         {
           headers: {
             "Content-Type": "application/json",
@@ -46,16 +46,15 @@ const Places = () => {
         }
       )
       .then((res: any) => {
-        const listItem = res.data.autocompleteList.filter((listItem) => {
-          return listItem.canonical.startsWith(
-            "https://www.holidify.com/places"
-          )
-            ? listItem
-            : null;
+        const linkPattern: RegExp =
+          /^https:\/\/www\.holidify\.com\/places\/[^\/]+\/$/;
+
+        const listItem = res.data.autocompleteList.filter((listItem: any) => {
+          return linkPattern.test(listItem.canonical) ? listItem : null;
         });
         console.log("LOG", listItem[0]);
 
-        setAutoName(listItem[0]);
+        setAutoName(listItem);
       })
       .then(() => console.log(autoName))
       .catch((error) => {
@@ -83,7 +82,10 @@ const Places = () => {
         }}
       >
         <option value="">Select place from here</option>
-        {autoName && <option value={autoName.name}>{autoName.name}</option>}
+        {autoName &&
+          autoName.map((autoName) => (
+            <option value={autoName.name}>{autoName.name}</option>
+          ))}
       </select>
 
       <button onClick={handleScrape} className="border">
