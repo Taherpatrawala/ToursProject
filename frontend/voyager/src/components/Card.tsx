@@ -1,17 +1,30 @@
 import toast, { Toaster } from "react-hot-toast";
 import addToWishlist from "../utils/addToWishlist";
 import deleteWishlist from "../utils/deleteWishlist";
-
+import { useDispatch } from "react-redux";
+import { setWishlistData } from "../Slices/wishlistSlice";
+import getWishlistData from "../utils/getWishlistData";
 interface Card {
   event_id: number;
   image: string;
   title: string;
   price: string;
   redirectUrl: string;
+  ACCESS_TOKEN: string;
   wishlistComponent: boolean;
 }
 
 const Card = (card: Card) => {
+  const dispatch = useDispatch();
+
+  const handleWishlistDelete = (eventId: number) => {
+    deleteWishlist(eventId).then(() => {
+      getWishlistData(card.ACCESS_TOKEN).then((res) => {
+        dispatch(setWishlistData(res.data));
+      });
+    });
+  };
+
   return (
     <div className="w-[25vw] md:w-[20vw] md:h-[65vh] m-4 rounded-md overflow-clip shadow-sm shadow-[#4f4e4e]">
       <div className="relative">
@@ -53,7 +66,7 @@ const Card = (card: Card) => {
       {card.wishlistComponent ? (
         <button
           className="border rounded-md font-bold bg-[#c93e3e] text-white "
-          onClick={() => deleteWishlist(card.event_id)}
+          onClick={() => handleWishlistDelete(card.event_id)}
         >
           Delete Wishlist
         </button>

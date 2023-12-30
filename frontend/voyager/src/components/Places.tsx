@@ -110,6 +110,7 @@ const Places = () => {
               title={card.title}
               price={card.price}
               redirectUrl={card.redirectUrl}
+              ACCESS_TOKEN=""
               wishlistComponent={false}
             />
           );

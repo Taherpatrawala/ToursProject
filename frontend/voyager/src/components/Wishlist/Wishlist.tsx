@@ -1,26 +1,32 @@
 import Card from "../Card";
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store/store";
 import getWishlistData from "../../utils/getWishlistData";
+import { useDispatch } from "react-redux";
+import { setWishlistData } from "../../Slices/wishlistSlice";
 
 import Cookies from "js-cookie";
 const Wishlist = () => {
-  const ACCESS_TOKEN = Cookies.get("ACCESS_TOKEN");
-  const [cards, setCards] = useState();
+  const ACCESS_TOKEN: string = Cookies.get("ACCESS_TOKEN");
+  const wishlists = useSelector((state: RootState) => state.wishlistData);
+  const dispatch = useDispatch();
+
   useEffect(() => {
     const wishlist = getWishlistData(ACCESS_TOKEN);
-    wishlist.then((res) => setCards(res.data));
+    wishlist.then((res) => dispatch(setWishlistData(res.data)));
   }, []);
 
   return (
     <div>
       <button
-        onClick={() => getWishlistData(ACCESS_TOKEN)}
+        onClick={() => console.log(wishlists)}
         className="text-2xl border rounded"
       >
         Get Wishlist
       </button>
-      {cards
-        ? cards.map((card) => {
+      {wishlists
+        ? wishlists.map((card) => {
             return (
               <div className="">
                 <Card
@@ -29,6 +35,7 @@ const Wishlist = () => {
                   title={card.event_title}
                   price={card.event_price}
                   redirectUrl={card.event_redirecturl}
+                  ACCESS_TOKEN={ACCESS_TOKEN}
                   wishlistComponent={true}
                 />
               </div>
