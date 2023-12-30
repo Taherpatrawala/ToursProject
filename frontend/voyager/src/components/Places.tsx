@@ -98,7 +98,7 @@ const Places = () => {
           className="w-[100vw] object-cover h-[58vh]"
         />
         <p className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-6xl font-bold text-white">
-          Name
+          {autoName && autoName[0] && autoName[0].name}
         </p>
       </div>
       <div className="">
