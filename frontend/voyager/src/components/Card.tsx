@@ -68,7 +68,7 @@ const Card = (card: Card) => {
         </p>
         {!card.wishlistComponent && <p>{card.duration}</p>}
         {!card.wishlistComponent && (
-          <div className="flex overflow-scroll">
+          <div className="grid md:grid-cols-4 grid-cols-2">
             {card.inclusions.map((inclusion: string) => {
               return (
                 <div className="bg-[#d73636] m-1 rounded-md">

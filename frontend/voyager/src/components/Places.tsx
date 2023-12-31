@@ -101,7 +101,7 @@ const Places = () => {
           {autoName && autoName[0] && autoName[0].name}
         </p>
       </div>
-      <div className="">
+      <div className="flex flex-col items-center">
         {scrapedData?.data?.cards.map((card: any) => {
           return (
             <Card
