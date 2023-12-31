@@ -64,33 +64,52 @@ const Places = () => {
 
   return (
     <div>
-      <input
-        type="text"
-        value={placeName}
-        onChange={(e) => {
-          setPlaceName(e.target.value);
-          getAutoCompleteList(e.target.value);
-        }}
-        onKeyDown={(e) => (e.key === "Enter" ? handleScrape() : null)}
-        className="border-2 border-red-300"
-      />
-      <select
-        value={placeName}
-        onChange={(e) => {
-          setPlaceName(e.target.value);
-          getAutoCompleteList(e.target.value);
-        }}
-      >
-        <option value="">Select place from here</option>
-        {autoName &&
-          autoName.map((autoName) => (
-            <option value={autoName.name}>{autoName.name}</option>
-          ))}
-      </select>
+      <div className="flex justify-center items-center">
+        <input
+          type="text"
+          value={placeName}
+          onChange={(e) => {
+            setPlaceName(e.target.value);
+            getAutoCompleteList(e.target.value);
+          }}
+          onKeyDown={(e) => (e.key === "Enter" ? handleScrape() : null)}
+          className="border-2 border-[#d04e4e]  w-[40vw] lg:w-[30vw] h-10 rounded-l-full"
+        />
+        <select
+          value={placeName}
+          className="border-y-[#d04e4e]"
+          onChange={(e) => {
+            setPlaceName(e.target.value);
+            getAutoCompleteList(e.target.value);
+          }}
+        >
+          <option value="">Select place from here</option>
+          {autoName &&
+            autoName.map((autoName) => (
+              <option value={autoName.name}>{autoName.name}</option>
+            ))}
+        </select>
 
-      <button onClick={handleScrape} className="border">
-        Get Data
-      </button>
+        <button
+          onClick={handleScrape}
+          className="border  rounded-r-full bg-[#d14747] p-2"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth="1.5"
+            stroke="currentColor"
+            className="w-6 h-6 text-white"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"
+            />
+          </svg>
+        </button>
+      </div>
       <div className="relative">
         <img
           src={scrapedData?.data?.images[0]}
