@@ -108,7 +108,10 @@ const Places = () => {
               event_id={0}
               image={card.image}
               title={card.title}
+              duration={card.tripDuration}
+              inclusions={card.inclusions}
               price={card.price}
+              priceDesc={card.priceDesc}
               redirectUrl={card.redirectUrl}
               ACCESS_TOKEN=""
               wishlistComponent={false}

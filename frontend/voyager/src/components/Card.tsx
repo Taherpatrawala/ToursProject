@@ -8,7 +8,10 @@ interface Card {
   event_id: number;
   image: string;
   title: string;
+  duration: string;
+  inclusions: string;
   price: string;
+  priceDesc: string;
   redirectUrl: string;
   ACCESS_TOKEN: string;
   wishlistComponent: boolean;
@@ -26,9 +29,9 @@ const Card = (card: Card) => {
   };
 
   return (
-    <div className="w-[25vw] md:w-[20vw] md:h-[65vh] m-4 rounded-md overflow-clip shadow-sm shadow-[#4f4e4e]">
+    <div className="flex flex-col md:flex-row w-[50vw] md:w-[60vw] md:h-[40vh]  lg:w-[75vw] m-4 rounded-md overflow-clip shadow-sm shadow-[#4f4e4e]">
       <div className="relative">
-        <img src={card.image} alt="" className="w-[30vw]" />
+        <img src={card.image} alt="" className="w-full md:w-[30vw] md:h-full" />
         <div className="absolute top-1 right-1 hover:bg-[#f37979] bg-opacity-40 rounded-full transition-all z-20">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -54,23 +57,39 @@ const Card = (card: Card) => {
         </div>
       </div>
 
-      <p
-        className="w-[20vw] cursor-pointer hover:text-red-600"
-        onClick={() =>
-          window.open(`${window.location.origin}${card.redirectUrl}`)
-        }
-      >
-        {card.title}
-      </p>
-      <p>{card.price}</p>
-      {card.wishlistComponent ? (
-        <button
-          className="border rounded-md font-bold bg-[#c93e3e] text-white "
-          onClick={() => handleWishlistDelete(card.event_id)}
+      <div className="flex flex-col items-center md:w-[30vw] lg:w-[45vw]">
+        <p
+          className="cursor-pointer hover:text-red-600 md:text-xl text-lg"
+          onClick={() =>
+            window.open(`${window.location.origin}${card.redirectUrl}`)
+          }
         >
-          Delete Wishlist
-        </button>
-      ) : null}
+          {card.title}
+        </p>
+        {!card.wishlistComponent && <p>{card.duration}</p>}
+        {!card.wishlistComponent && (
+          <div className="flex overflow-scroll">
+            {card.inclusions.map((inclusion: string) => {
+              return (
+                <div className="bg-[#d73636] m-1 rounded-md">
+                  <p className="text-white">{inclusion}</p>
+                </div>
+              );
+            })}
+          </div>
+        )}
+
+        <p>{card.price}</p>
+        {!card.wishlistComponent && <p>{card.priceDesc}</p>}
+        {card.wishlistComponent ? (
+          <button
+            className="border rounded-md font-bold bg-[#c93e3e] text-white "
+            onClick={() => handleWishlistDelete(card.event_id)}
+          >
+            Delete Wishlist
+          </button>
+        ) : null}
+      </div>
       <Toaster />
     </div>
   );

@@ -49,14 +49,19 @@ class ScrapedDataView(APIView):
 
                     return result_string
 
+                def handleInclusions(item):
+                    return item.find('p').text
+
                 def cardDataHandler(card):
 
                     cardImage = card.find('img', 'lazy')['data-original']
                     cardTitle = card.find(
                         'div', 'inventory-details').find('h3', 'name').text
                     cardTripDuration = card.find('p', 'trip-duration').text
-                    cardInclusionItems = str(
-                        card.find_all('div', 'inclusion-item'))
+                    cardInclusionItems = card.find_all('div', 'inclusion-item')
+                    cardInclusionItemsText = list(
+                        map(lambda item: handleInclusions(item), cardInclusionItems))
+
                     cardPrice = card.find(
                         'p', 'price').text
                     cardDescPrice = card.find(
@@ -68,7 +73,7 @@ class ScrapedDataView(APIView):
                     cardDetails = {
                         'image': cardImage,
                         'title': cardTitle,
-                        'inclusions': cardInclusionItems,
+                        'inclusions': cardInclusionItemsText,
                         'tripDuration': cardTripDuration,
                         'price': cardPrice,
                         'priceDesc': cardDescPrice,

@@ -33,6 +33,9 @@ const Wishlist = () => {
                   event_id={card.id}
                   image={card.event_image}
                   title={card.event_title}
+                  inclusions=""
+                  duration=""
+                  priceDesc=""
                   price={card.event_price}
                   redirectUrl={card.event_redirecturl}
                   ACCESS_TOKEN={ACCESS_TOKEN}
