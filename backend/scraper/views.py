@@ -54,8 +54,13 @@ class ScrapedDataView(APIView):
                     cardImage = card.find('img', 'lazy')['data-original']
                     cardTitle = card.find(
                         'div', 'inventory-details').find('h3', 'name').text
+                    cardTripDuration = card.find('p', 'trip-duration').text
+                    cardInclusionItems = str(
+                        card.find_all('div', 'inclusion-item'))
                     cardPrice = card.find(
                         'p', 'price').text
+                    cardDescPrice = card.find(
+                        'p', 'price-desc').text
                     cardId = card['dataid']
                     cardurlTitle = remove_special_characters(cardTitle)
                     cardurl = f"/{cardurlTitle.lstrip().replace(' ','-').lower()}{cardId}/{place_name}"
@@ -63,7 +68,10 @@ class ScrapedDataView(APIView):
                     cardDetails = {
                         'image': cardImage,
                         'title': cardTitle,
+                        'inclusions': cardInclusionItems,
+                        'tripDuration': cardTripDuration,
                         'price': cardPrice,
+                        'priceDesc': cardDescPrice,
                         'redirectUrl': cardRedirectUrl
                     }
                     return cardDetails
