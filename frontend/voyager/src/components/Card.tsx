@@ -29,7 +29,7 @@ const Card = (card: Card) => {
   };
 
   return (
-    <div className="flex flex-col md:flex-row w-[50vw] md:w-[60vw] md:h-[40vh]  lg:w-[75vw] m-4 rounded-md overflow-clip shadow-sm shadow-[#4f4e4e]">
+    <div className="flex flex-col md:flex-row w-[60vw] md:w-[70vw] md:h-[40vh]  lg:w-[75vw] m-4 rounded-md overflow-clip shadow-sm shadow-[#4f4e4e]">
       <div className="relative">
         <img src={card.image} alt="" className="w-full md:w-[30vw] md:h-full" />
         <div className="absolute top-1 right-1 hover:bg-[#f37979] bg-opacity-40 rounded-full transition-all z-20">
@@ -57,7 +57,7 @@ const Card = (card: Card) => {
         </div>
       </div>
 
-      <div className="flex flex-col items-center md:w-[30vw] lg:w-[45vw]">
+      <div className="flex flex-col items-center md:w-[40vw] lg:w-[45vw]">
         <p
           className="cursor-pointer hover:text-red-600 md:text-xl text-lg"
           onClick={() =>
@@ -72,15 +72,19 @@ const Card = (card: Card) => {
             {card.inclusions.map((inclusion: string) => {
               return (
                 <div className="bg-[#d73636] m-1 rounded-md">
-                  <p className="text-white">{inclusion}</p>
+                  <p className="text-white text-center">{inclusion}</p>
                 </div>
               );
             })}
           </div>
         )}
 
-        <p>{card.price}</p>
-        {!card.wishlistComponent && <p>{card.priceDesc}</p>}
+        <p className="text-xl md:text-2xl lg:text-3xl font-bold">
+          {card.price}
+        </p>
+        {!card.wishlistComponent && (
+          <p className="text-[#333232]">{card.priceDesc}</p>
+        )}
         {card.wishlistComponent ? (
           <button
             className="border rounded-md font-bold bg-[#c93e3e] text-white "
