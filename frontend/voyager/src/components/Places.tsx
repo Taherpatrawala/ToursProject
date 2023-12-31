@@ -1,10 +1,14 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router";
 
+import axios from "axios";
 import Cookies from "js-cookie";
 
-import { useNavigate } from "react-router";
 import Card from "./Card";
+
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+
 const Places = () => {
   const [scrapedData, setScrapedData] = useState<any>();
   const [placeName, setPlaceName] = useState<string>("");
@@ -111,11 +115,21 @@ const Places = () => {
         </button>
       </div>
       <div className="relative">
-        <img
-          src={scrapedData?.data?.images[0]}
-          alt=""
-          className="w-[100vw] object-cover h-[58vh]"
-        />
+        <Swiper className="mySwiper">
+          {scrapedData?.data &&
+            scrapedData.data.images.map((image: string) => {
+              return (
+                <SwiperSlide>
+                  <img
+                    src={image}
+                    alt=""
+                    className="w-[100vw] object-cover h-[58vh]"
+                  />
+                </SwiperSlide>
+              );
+            })}
+        </Swiper>
+
         <p className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-6xl font-bold text-white">
           {autoName && autoName[0] && autoName[0].name}
         </p>

@@ -12,7 +12,7 @@ import "swiper/css/thumbs";
 
 import "../index.css";
 import ReviewInput from "./ReviewSection/ReviewInput";
-import { delay } from "@reduxjs/toolkit/dist/utils";
+
 const PlaceOverview = () => {
   const { tour, event } = useParams();
   const [overview, setOverview] = useState<any>();
