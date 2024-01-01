@@ -46,8 +46,17 @@ html,body{
     display: flex;
     justify-content: center;
     align-items: center;
+    
   }
   
+  .placeImgSwiper{
+    transition-duration: 500 !important;
+  }
+
+  .placeImg{
+    height: auto !important;
+  }
+
   .swiper-slide img {
     display: block;
     width: 100%;

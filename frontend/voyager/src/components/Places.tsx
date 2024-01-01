@@ -7,7 +7,9 @@ import Cookies from "js-cookie";
 import Card from "./Card";
 
 import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay, EffectFade, FreeMode } from "swiper/modules";
 import "swiper/css";
+import "swiper/css/effect-fade";
 
 const Places = () => {
   const [scrapedData, setScrapedData] = useState<any>();
@@ -115,22 +117,32 @@ const Places = () => {
         </button>
       </div>
       <div className="relative">
-        <Swiper className="mySwiper">
+        <Swiper
+          autoplay={{
+            delay: 4500,
+            stopOnLastSlide: false,
+            disableOnInteraction: false,
+          }}
+          effect={"fade"}
+          loop={true}
+          modules={[Autoplay, FreeMode, EffectFade]}
+          className="mySwiper"
+        >
           {scrapedData?.data &&
             scrapedData.data.images.map((image: string) => {
               return (
-                <SwiperSlide>
+                <SwiperSlide className="">
                   <img
                     src={image}
                     alt=""
-                    className="w-[100vw] object-cover h-[58vh]"
+                    className=" object-cover h-[58vh] opacity-100 placeImg"
                   />
                 </SwiperSlide>
               );
             })}
         </Swiper>
 
-        <p className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-6xl font-bold text-white">
+        <p className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-6xl font-bold text-white z-20">
           {autoName && autoName[0] && autoName[0].name}
         </p>
       </div>
