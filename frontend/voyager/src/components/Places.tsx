@@ -83,7 +83,7 @@ const Places = () => {
         />
         <select
           value={placeName}
-          className="border-y-[#d04e4e]"
+          className=" h-10 border-[#d04e4e]"
           onChange={(e) => {
             setPlaceName(e.target.value);
             getAutoCompleteList(e.target.value);
@@ -126,7 +126,7 @@ const Places = () => {
           effect={"fade"}
           loop={true}
           modules={[Autoplay, FreeMode, EffectFade]}
-          className="mySwiper"
+          className="mySwiper "
         >
           {scrapedData?.data &&
             scrapedData.data.images.map((image: string) => {
@@ -135,7 +135,7 @@ const Places = () => {
                   <img
                     src={image}
                     alt=""
-                    className=" object-cover h-[58vh] opacity-100 placeImg"
+                    className=" object-contain swiperImg opacity-100 bg-[rgb(245,245,220)] rounded-md h-[50vh] max-h-[50vh] min-h-[50vh] md:h-[70vh] md:max-h-[70vh] md:min-h-[70vh]"
                   />
                 </SwiperSlide>
               );

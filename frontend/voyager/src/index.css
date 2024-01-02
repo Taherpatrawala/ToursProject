@@ -11,7 +11,7 @@
 }
 
 html,body{
-  background-color: beige;
+  background-color: beige!important;
 }
 
 #app {
@@ -53,8 +53,8 @@ html,body{
     transition-duration: 500 !important;
   }
 
-  .placeImg{
-    height: auto !important;
+  .swiperImg{
+    object-fit: contain !important;
   }
 
   .swiper-slide img {
