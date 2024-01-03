@@ -28,7 +28,7 @@ const Wishlist = () => {
       {wishlists
         ? wishlists.map((card) => {
             return (
-              <div className="">
+              <div className="flex justify-center">
                 <Card
                   event_id={card.id}
                   image={card.event_image}

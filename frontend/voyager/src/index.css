@@ -56,6 +56,9 @@ html,body{
   .swiperImg{
     object-fit: contain !important;
   }
+  .swiperSlide{
+    opacity: 1!important;
+  }
 
   .swiper-slide img {
     display: block;
@@ -99,5 +102,6 @@ html,body{
     opacity: 1;
   }
   
+
 
   

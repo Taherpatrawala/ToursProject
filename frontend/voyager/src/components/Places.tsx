@@ -142,7 +142,7 @@ const Places = () => {
             })}
         </Swiper>
 
-        <p className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-6xl font-bold text-white z-20">
+        <p className="absolute w-full md:w-min md:bottom-0 left-1/2 bottom-1/4 -translate-x-1/2 -translate-y-1/2 text-4xl font-bold text-[#e1dede] z-20">
           {autoName && autoName[0] && autoName[0].name}
         </p>
       </div>
