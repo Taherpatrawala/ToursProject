@@ -83,13 +83,12 @@ const Places = () => {
         />
         <select
           value={placeName}
-          className=" h-10 border-[#d04e4e]"
+          className=" h-10 border-2 border-l-0  border-[#d04e4e] "
           onChange={(e) => {
             setPlaceName(e.target.value);
             getAutoCompleteList(e.target.value);
           }}
         >
-          <option value="">Select place from here</option>
           {autoName &&
             autoName.map((autoName) => (
               <option value={autoName.name}>{autoName.name}</option>

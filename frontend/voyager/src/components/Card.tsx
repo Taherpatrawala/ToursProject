@@ -59,7 +59,7 @@ const Card = (card: Card) => {
 
       <div className="flex flex-col items-center md:w-[40vw] lg:w-[45vw]">
         <p
-          className="cursor-pointer hover:text-red-600 md:text-3xl text-lg text-center"
+          className="cursor-pointer hover:text-red-600 md:text-xl lg:text-2xl text-lg text-center"
           onClick={() =>
             window.open(`${window.location.origin}${card.redirectUrl}`)
           }
@@ -68,7 +68,7 @@ const Card = (card: Card) => {
         </p>
         {!card.wishlistComponent && <p>{card.duration}</p>}
         {!card.wishlistComponent && (
-          <div className="grid md:grid-cols-4 grid-cols-2 md:my-4">
+          <div className="grid md:grid-cols-4 grid-cols-2 md:mt-4">
             {card.inclusions.map((inclusion: string) => {
               return (
                 <div className="bg-[#d73636] m-1 rounded-md">
@@ -79,7 +79,7 @@ const Card = (card: Card) => {
           </div>
         )}
 
-        <p className="text-xl md:text-2xl lg:text-3xl font-bold mt-6">
+        <p className="text-xl md:text-2xl lg:text-3xl font-bold mt-3">
           {card.price}
         </p>
         {!card.wishlistComponent && (
