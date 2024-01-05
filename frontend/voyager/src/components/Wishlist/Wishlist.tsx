@@ -1,5 +1,6 @@
 import Card from "../Card";
-import { useEffect, useState } from "react";
+
+import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/store";
 import getWishlistData from "../../utils/getWishlistData";

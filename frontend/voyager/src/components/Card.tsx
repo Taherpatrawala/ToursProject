@@ -1,4 +1,6 @@
+import BookingModal from "./BookingModal";
 import toast, { Toaster } from "react-hot-toast";
+import { useState } from "react";
 import addToWishlist from "../utils/addToWishlist";
 import deleteWishlist from "../utils/deleteWishlist";
 import { useDispatch } from "react-redux";
@@ -18,6 +20,7 @@ interface Card {
 }
 
 const Card = (card: Card) => {
+  const [isModalOpen, setModalOpen] = useState(false);
   const dispatch = useDispatch();
 
   const handleWishlistDelete = (eventId: number) => {
@@ -26,6 +29,14 @@ const Card = (card: Card) => {
         dispatch(setWishlistData(res.data));
       });
     });
+  };
+
+  const openModal = () => {
+    setModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setModalOpen(false);
   };
 
   return (
@@ -93,6 +104,12 @@ const Card = (card: Card) => {
             Delete Wishlist
           </button>
         ) : null}
+        {card.wishlistComponent && (
+          <div className="">
+            <button onClick={openModal}>Open Modal</button>
+            <BookingModal isOpen={isModalOpen} onClose={closeModal} />
+          </div>
+        )}
       </div>
       <Toaster />
     </div>
