@@ -43,7 +43,7 @@ INSTALLED_APPS = [
 
     'rest_framework',
     'corsheaders',
-    'checkout',
+    'stripe',
     'accounts',
     'scraper',
     'emails',
