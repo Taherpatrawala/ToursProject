@@ -10,7 +10,7 @@ from django.contrib.auth import get_user_model
 from rest_framework import permissions
 from .serializers import UserInfoSerializer, WishListDataSerializer, ReviewSerializer
 from .models import WishList, Reviews
-from emails.utils import send_welcome_email
+from emails.utils.send_welcome_email import send_welcome_email
 
 
 User = get_user_model()
@@ -39,7 +39,7 @@ class SignUpView(APIView):
                         email=email, password=password, name=name, profileImage=profileImage)
                     user.save()
 
-                    send_welcome_email.send_welcome_email(name, email)
+                    send_welcome_email(name, email)
 
                     return Response({'message': 'User created succesfully'}, status=status.HTTP_201_CREATED)
         else:

@@ -15,6 +15,7 @@ const Places = () => {
   const [scrapedData, setScrapedData] = useState<any>();
   const [placeName, setPlaceName] = useState<string>("");
   const [autoName, setAutoName] = useState();
+  const [readMore, setReadMore] = useState<boolean>(false);
   const ACCESS_TOKEN = Cookies.get("ACCESS_TOKEN");
   const navigate = useNavigate();
 
@@ -145,6 +146,22 @@ const Places = () => {
           {autoName && autoName[0] && autoName[0].name}
         </p>
       </div>
+      <div className="relative">
+        <div
+          className={`${
+            readMore ? "h-full" : "h-8"
+          } overflow-hidden p-4 pt-0 border border-[#827c7c] rounded-2xl`}
+          dangerouslySetInnerHTML={{ __html: scrapedData?.data.description }}
+        ></div>
+        {scrapedData?.data && (
+          <button
+            className="border-2 rounded-lg absolute right-0 -translate-x-1/2 -translate-y-1/3"
+            onClick={() => setReadMore((prev) => !prev)}
+          >
+            {readMore ? "Read Less" : "Read More"}
+          </button>
+        )}
+      </div>
       <div className="flex flex-col items-center">
         {scrapedData?.data?.cards.map((card: any) => {
           return (
@@ -163,10 +180,6 @@ const Places = () => {
           );
         })}
       </div>
-      <div
-        className=""
-        dangerouslySetInnerHTML={{ __html: scrapedData?.data.description }}
-      ></div>
     </div>
   );
 };
