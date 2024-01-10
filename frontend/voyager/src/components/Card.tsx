@@ -107,7 +107,12 @@ const Card = (card: Card) => {
         {card.wishlistComponent && (
           <div className="">
             <button onClick={openModal}>Open Modal</button>
-            <BookingModal isOpen={isModalOpen} onClose={closeModal} />
+            <BookingModal
+              isOpen={isModalOpen}
+              onClose={closeModal}
+              event_title={card.title}
+              redirectUrl={card.redirectUrl}
+            />
           </div>
         )}
       </div>

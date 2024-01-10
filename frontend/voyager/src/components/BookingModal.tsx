@@ -1,13 +1,32 @@
 import { useRef } from "react";
+import axios from "axios";
+import Cookies from "js-cookie";
 
-const BookingModal = ({ isOpen, onClose }) => {
+const BookingModal = ({ isOpen, onClose, event_title, redirectUrl }) => {
   const dialogRef = useRef(null);
+  const ACCESS_TOKEN = Cookies.get("ACCESS_TOKEN");
 
   const handleDialogClose = () => {
     if (dialogRef.current) {
       dialogRef.current.close();
       onClose();
     }
+  };
+
+  const handleBooking = async () => {
+    return await axios.post(
+      "http://localhost:8000/makeBooking/",
+      {
+        event_title: event_title,
+        redirectUrl: redirectUrl,
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${ACCESS_TOKEN}`,
+        },
+      }
+    );
   };
 
   return (
@@ -20,6 +39,7 @@ const BookingModal = ({ isOpen, onClose }) => {
           >
             &times;
           </button>
+          <p className="text-center">{event_title}</p>
           <div className="mt-5">
             <label
               htmlFor="Number of Adults"
@@ -48,6 +68,17 @@ const BookingModal = ({ isOpen, onClose }) => {
               id=""
               className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             />
+          </div>
+          <div>
+            <button
+              type="submit"
+              onClick={handleBooking}
+              name=""
+              id=""
+              className="mt-2 bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            >
+              Book!
+            </button>
           </div>
         </div>
       </div>
