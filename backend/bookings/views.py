@@ -16,7 +16,7 @@ class MakeBooking(APIView):
 
     def post(self, request):
         mutable_data = request.data.copy()
-        mutable_data['user'] = request.user.id
+        mutable_data['user'] = [request.user.id]
         event_title = mutable_data['event_title']
         event_price = mutable_data['event_price']
         serializer_instance = BookingsSerializers(data=mutable_data)

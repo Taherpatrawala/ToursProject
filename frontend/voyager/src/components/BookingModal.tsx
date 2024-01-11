@@ -1,9 +1,26 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
 
-const BookingModal = ({ isOpen, onClose, event_title, redirectUrl }) => {
+const BookingModal = ({
+  isOpen,
+  onClose,
+  event_title,
+  redirectUrl,
+  event_price,
+  event_image,
+}) => {
   const dialogRef = useRef(null);
+  interface bookingDetailsInterface {
+    number_of_adults: number | null;
+    check_in_date: string | number | readonly string[] | undefined;
+  }
+  const [bookingDetails, setBookingDetails] = useState<bookingDetailsInterface>(
+    {
+      number_of_adults: 0,
+      check_in_date: new Date().toISOString().slice(0, 10),
+    }
+  );
   const ACCESS_TOKEN = Cookies.get("ACCESS_TOKEN");
 
   const handleDialogClose = () => {
@@ -14,15 +31,21 @@ const BookingModal = ({ isOpen, onClose, event_title, redirectUrl }) => {
   };
 
   const handleBooking = async () => {
+    const todayDate = new Date().toISOString().slice(0, 10);
+    console.log(todayDate);
+
     return await axios.post(
-      "http://localhost:8000/makeBooking/",
+      "http://localhost:8000/bookings/",
       {
         event_title: event_title,
-        redirectUrl: redirectUrl,
+        event_price: event_price,
+        event_redirecturl: redirectUrl,
+        event_image: event_image,
+        number_of_adults: bookingDetails.number_of_adults,
+        check_in_date: bookingDetails.check_in_date,
       },
       {
         headers: {
-          "Content-Type": "application/json",
           Authorization: `Bearer ${ACCESS_TOKEN}`,
         },
       }
@@ -50,6 +73,13 @@ const BookingModal = ({ isOpen, onClose, event_title, redirectUrl }) => {
             <input
               type="text"
               name=""
+              value={bookingDetails.number_of_adults}
+              onChange={(e) =>
+                setBookingDetails({
+                  ...bookingDetails,
+                  number_of_adults: parseInt(e.target.value) || 0,
+                })
+              }
               id=""
               className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               placeholder="Enter number of people"
@@ -65,6 +95,13 @@ const BookingModal = ({ isOpen, onClose, event_title, redirectUrl }) => {
             <input
               type="date"
               name=""
+              value={bookingDetails.check_in_date}
+              onChange={(e) =>
+                setBookingDetails({
+                  ...bookingDetails,
+                  check_in_date: e.target.value,
+                })
+              }
               id=""
               className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             />

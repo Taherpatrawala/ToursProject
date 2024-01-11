@@ -18,7 +18,7 @@ const Login = () => {
       .post("http://127.0.0.1:8000/api/token/", logInData)
       .then((res) => {
         dispatch(setToken(res.data));
-        localStorage.setItem("access_token", res.data.access);
+
         Cookies.set("ACCESS_TOKEN", res.data.access, {
           expires: 1,
         });

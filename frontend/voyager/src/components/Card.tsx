@@ -112,6 +112,8 @@ const Card = (card: Card) => {
               onClose={closeModal}
               event_title={card.title}
               redirectUrl={card.redirectUrl}
+              event_price={card.price}
+              event_image={card.image}
             />
           </div>
         )}
