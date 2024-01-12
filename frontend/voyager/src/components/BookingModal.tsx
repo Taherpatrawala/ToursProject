@@ -55,7 +55,7 @@ const BookingModal = ({
   return (
     <dialog ref={dialogRef} open={isOpen} className="modal">
       <div className="w-[100vw] h-screen bg-black bg-opacity-40 flex justify-center items-center fixed top-0 left-0 z-50 transition-all ">
-        <div className=" w-[70vw]  md:w-[50vw] lg:w-[35vw] h-[40vh]  bg-slate-400 relative p-2 rounded-lg">
+        <div className=" w-[70vw]  lg:w-[35vw] h-[50vh]  bg-slate-400 relative p-2 rounded-lg">
           <button
             className="close text-4xl text-white text-right absolute top-0 right-0"
             onClick={handleDialogClose}
