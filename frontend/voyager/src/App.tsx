@@ -12,6 +12,10 @@ import { useDispatch } from "react-redux";
 import { setUserData } from "./Slices/userDataSlice";
 import { setToken } from "./Slices/tokensSlice";
 import Wishlist from "./components/Wishlist/Wishlist";
+import { Elements } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
+
+const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
 function App() {
   const ACCESS_TOKEN = Cookies.get("ACCESS_TOKEN");
   const REFRESH_TOKEN = Cookies.get("REFRESH_TOKEN");
@@ -29,18 +33,20 @@ function App() {
   }, [ACCESS_TOKEN]);
   return (
     <div className="App overflow-y-visible">
-      <BrowserRouter>
-        <Navbar />
-        <Routes>
-          <Route path="/" element={<Places />} />
-          <Route path="/signup" element={<SignUp />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/scraper" element={<Scraper />} />
-          <Route path="/places" element={<Places />} />
-          <Route path=":tour/:event" element={<PlaceOverview />} />
-          <Route path="/wishlist" element={<Wishlist />} />
-        </Routes>
-      </BrowserRouter>
+      <Elements stripe={stripePromise}>
+        <BrowserRouter>
+          <Navbar />
+          <Routes>
+            <Route path="/" element={<Places />} />
+            <Route path="/signup" element={<SignUp />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/scraper" element={<Scraper />} />
+            <Route path="/places" element={<Places />} />
+            <Route path=":tour/:event" element={<PlaceOverview />} />
+            <Route path="/wishlist" element={<Wishlist />} />
+          </Routes>
+        </BrowserRouter>
+      </Elements>
     </div>
   );
 }

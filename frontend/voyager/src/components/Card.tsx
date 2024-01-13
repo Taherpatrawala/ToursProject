@@ -106,7 +106,7 @@ const Card = (card: Card) => {
         ) : null}
         {card.wishlistComponent && (
           <div className="">
-            <button onClick={openModal}>Open Modal</button>
+            <button onClick={openModal}>Book!</button>
             <BookingModal
               isOpen={isModalOpen}
               onClose={closeModal}

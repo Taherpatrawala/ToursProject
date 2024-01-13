@@ -1,6 +1,12 @@
 import { useRef, useState } from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
+import {
+  CardElement,
+  Elements,
+  useStripe,
+  useElements,
+} from "@stripe/react-stripe-js";
 
 const BookingModal = ({
   isOpen,
@@ -21,6 +27,8 @@ const BookingModal = ({
       check_in_date: new Date().toISOString().slice(0, 10),
     }
   );
+  const stripe = useStripe();
+  const elements = useElements();
   const ACCESS_TOKEN = Cookies.get("ACCESS_TOKEN");
 
   const handleDialogClose = () => {
@@ -34,22 +42,28 @@ const BookingModal = ({
     const todayDate = new Date().toISOString().slice(0, 10);
     console.log(todayDate);
 
-    return await axios.post(
-      "http://localhost:8000/bookings/",
-      {
-        event_title: event_title,
-        event_price: event_price,
-        event_redirecturl: redirectUrl,
-        event_image: event_image,
-        number_of_adults: bookingDetails.number_of_adults,
-        check_in_date: bookingDetails.check_in_date,
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${ACCESS_TOKEN}`,
+    return await axios
+      .post(
+        "http://localhost:8000/bookings/",
+        {
+          event_title: event_title,
+          event_price: event_price,
+          event_redirecturl: redirectUrl,
+          event_image: event_image,
+          number_of_adults: bookingDetails.number_of_adults,
+          check_in_date: bookingDetails.check_in_date,
         },
-      }
-    );
+        {
+          headers: {
+            Authorization: `Bearer ${ACCESS_TOKEN}`,
+          },
+        }
+      )
+      .then((res) => {
+        console.log(res.data);
+
+        stripe?.redirectToCheckout({ sessionId: res?.data?.sessionId });
+      });
   };
 
   return (

@@ -6,6 +6,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from .models import Booking
 import stripe
+from decouple import config
 
 
 # Create your views here.
@@ -18,19 +19,22 @@ class MakeBooking(APIView):
         mutable_data = request.data.copy()
         mutable_data['user'] = [request.user.id]
         event_title = mutable_data['event_title']
-        event_price = mutable_data['event_price']
+        event_price = mutable_data['event_price'].replace(
+            '₹', '').replace(',', '').replace('*', '').strip()
+        number_of_adults = mutable_data['number_of_adults']
         serializer_instance = BookingsSerializers(data=mutable_data)
         if serializer_instance.is_valid():
             print(serializer_instance.validated_data)
             try:
+                stripe.api_key = config('STRIPE_SECRET_KEY')
                 checkout_session = stripe.checkout.Session.create(
                     line_items=[{
                         'price_data': {
-                            'currency': 'usd',
+                            'currency': 'inr',
                             'product_data': {
                                 'name': event_title,
                             },
-                            'unit_amount': event_price,
+                            'unit_amount': int(event_price)*100*int(number_of_adults),
                         },
                         'quantity': 1
                     }],
@@ -39,9 +43,10 @@ class MakeBooking(APIView):
                     cancel_url='http://localhost:5173/places/',
                 )
                 serializer_instance.save()
-                return redirect(checkout_session.url, code=303)
+                return Response({'sessionId': checkout_session.id}, status=status.HTTP_202_ACCEPTED)
             except Exception as e:
                 print(e)
+                return Response('Error hogaya ')
 
         else:
             return Response(serializer_instance.errors, status=status.HTTP_406_NOT_ACCEPTABLE)
