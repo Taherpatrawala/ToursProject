@@ -5,6 +5,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, FreeMode, Navigation, Thumbs } from "swiper/modules";
 import toast, { Toaster } from "react-hot-toast";
 import addToWishlist from "../utils/addToWishlist";
+import BookingModal from "./BookingModal";
 import "swiper/css";
 import "swiper/css/free-mode";
 import "swiper/css/navigation";
@@ -17,6 +18,7 @@ const PlaceOverview = () => {
   const { tour, event } = useParams();
   const [overview, setOverview] = useState<any>();
   const [thumbsSwiper, setThumbsSwiper] = useState<any>(null);
+  const [isModalOpen, setModalOpen] = useState<boolean>(false);
   const card = {
     title: overview?.title,
     image: overview?.images[0],
@@ -46,6 +48,14 @@ const PlaceOverview = () => {
     // You can add loading state or a message here
     return <div>Loading...</div>;
   }
+
+  const openModal = () => {
+    setModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setModalOpen(false);
+  };
 
   return (
     <div className="flex  flex-col">
@@ -131,6 +141,22 @@ const PlaceOverview = () => {
                 />
               </svg>
             </div>
+            <div className="">
+              <button
+                className="p-2 m-2 border rounded-md bg-white border-green-300 hover:bg-green-300 hover:text-white transition-all duration-300 shadow-md"
+                onClick={openModal}
+              >
+                Book!
+              </button>
+            </div>
+            <BookingModal
+              isOpen={isModalOpen}
+              onClose={closeModal}
+              event_title={card.title}
+              redirectUrl={card.redirectUrl}
+              event_price={card.price.split(" ")[1]}
+              event_image={card.image}
+            />
           </div>
         </div>
 

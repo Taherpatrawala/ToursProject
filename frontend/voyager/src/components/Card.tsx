@@ -98,7 +98,7 @@ const Card = (card: Card) => {
         )}
         {card.wishlistComponent ? (
           <button
-            className="border rounded-md font-bold bg-[#c93e3e] text-white "
+            className="p-2 m-2 border rounded-md bg-white border-[#cd4e4e] hover:bg-[#cd4e4e] hover:text-white transition-all duration-300 shadow-md "
             onClick={() => handleWishlistDelete(card.event_id)}
           >
             Delete Wishlist
@@ -106,7 +106,12 @@ const Card = (card: Card) => {
         ) : null}
         {card.wishlistComponent && (
           <div className="">
-            <button onClick={openModal}>Book!</button>
+            <button
+              className="p-2 m-2 border rounded-md bg-white border-green-300 hover:bg-green-300 hover:text-white transition-all duration-300 shadow-md"
+              onClick={openModal}
+            >
+              Book!
+            </button>
             <BookingModal
               isOpen={isModalOpen}
               onClose={closeModal}
