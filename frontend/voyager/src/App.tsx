@@ -5,6 +5,7 @@ import Places from "./components/Places";
 import PlaceOverview from "./components/PlaceOverview";
 import Login from "./components/Login/Login";
 import Navbar from "./components/Navbar/Navbar";
+import Bookings from "./components/Bookings/Bookings";
 import { useEffect } from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
@@ -44,6 +45,7 @@ function App() {
             <Route path="/places" element={<Places />} />
             <Route path=":tour/:event" element={<PlaceOverview />} />
             <Route path="/wishlist" element={<Wishlist />} />
+            <Route path="/bookings" element={<Bookings />} />
           </Routes>
         </BrowserRouter>
       </Elements>

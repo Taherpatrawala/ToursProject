@@ -148,8 +148,8 @@ const Places = () => {
       </div>
       <div className="relative">
         <div
-          className={`${
-            readMore ? "h-full" : "h-8"
+          className={`transition-height duration-500 ${
+            readMore ? "h-auto" : "h-8"
           } overflow-hidden p-4 pt-0 border border-[#827c7c] rounded-2xl`}
           dangerouslySetInnerHTML={{ __html: scrapedData?.data.description }}
         ></div>
@@ -162,6 +162,7 @@ const Places = () => {
           </button>
         )}
       </div>
+
       <div className="flex flex-col items-center">
         {scrapedData?.data?.cards.map((card: any) => {
           return (

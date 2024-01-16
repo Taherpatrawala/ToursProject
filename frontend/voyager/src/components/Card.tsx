@@ -1,4 +1,4 @@
-import BookingModal from "./BookingModal";
+import BookingModal from "./Bookings/BookingModal";
 import toast, { Toaster } from "react-hot-toast";
 import { useState } from "react";
 import addToWishlist from "../utils/addToWishlist";

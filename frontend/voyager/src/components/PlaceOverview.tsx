@@ -5,7 +5,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, FreeMode, Navigation, Thumbs } from "swiper/modules";
 import toast, { Toaster } from "react-hot-toast";
 import addToWishlist from "../utils/addToWishlist";
-import BookingModal from "./BookingModal";
+import BookingModal from "./Bookings/BookingModal";
 import "swiper/css";
 import "swiper/css/free-mode";
 import "swiper/css/navigation";
