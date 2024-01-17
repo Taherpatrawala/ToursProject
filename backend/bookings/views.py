@@ -19,6 +19,11 @@ class MakeBooking(APIView):
         mutable_data = request.data.copy()
         mutable_data['user'] = [request.user.id]
         event_title = mutable_data['event_title']
+        existingBookings = Booking.objects.filter(
+            user=request.user.id).filter(event_title=event_title)
+        print(existingBookings)
+        if existingBookings:
+            return Response("Booking Already Made", status=status.HTTP_400_BAD_REQUEST)
         event_price = mutable_data['event_price'].replace(
             '₹', '').replace(',', '').replace('*', '').strip()
         number_of_adults = mutable_data['number_of_adults']
@@ -39,7 +44,7 @@ class MakeBooking(APIView):
                         'quantity': 1
                     }],
                     mode='payment',
-                    success_url='http://localhost:5173/wishlist/',
+                    success_url='http://localhost:5173/bookings/',
                     cancel_url='http://localhost:5173/places/',
                 )
                 serializer_instance.save()
