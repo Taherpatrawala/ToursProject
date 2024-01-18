@@ -40,7 +40,7 @@ const Wishlist = () => {
                   price={card.event_price}
                   redirectUrl={card.event_redirecturl}
                   ACCESS_TOKEN={ACCESS_TOKEN}
-                  wishlistComponent={true}
+                  Component="wishlist"
                 />
               </div>
             );

@@ -176,7 +176,7 @@ const Places = () => {
               priceDesc={card.priceDesc}
               redirectUrl={card.redirectUrl}
               ACCESS_TOKEN=""
-              wishlistComponent={false}
+              Component="places"
             />
           );
         })}
