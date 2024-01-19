@@ -1,6 +1,6 @@
 import BookingModal from "./Bookings/BookingModal";
 import toast, { Toaster } from "react-hot-toast";
-import { Component, useState } from "react";
+import { useState } from "react";
 import addToWishlist from "../utils/addToWishlist";
 import deleteWishlist from "../utils/deleteWishlist";
 import { useDispatch } from "react-redux";
