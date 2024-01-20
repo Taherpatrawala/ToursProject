@@ -6,6 +6,7 @@ import deleteWishlist from "../utils/deleteWishlist";
 import { useDispatch } from "react-redux";
 import { setWishlistData } from "../Slices/wishlistSlice";
 import getWishlistData from "../utils/getWishlistData";
+import { cancelBooking } from "../utils/cancelBooking";
 interface Card {
   event_id: number;
   image: string;
@@ -29,6 +30,10 @@ const Card = (card: Card) => {
         dispatch(setWishlistData(res.data));
       });
     });
+  };
+
+  const handleCancellation = (title) => {
+    cancelBooking(title, card.ACCESS_TOKEN).then((res) => console.log(res));
   };
 
   const openModal = () => {
@@ -97,6 +102,14 @@ const Card = (card: Card) => {
         </p>
         {card.Component === "places" && (
           <p className="text-[#333232]">{card.priceDesc}</p>
+        )}
+        {card.Component == "bookings" && (
+          <button
+            className="p-2 m-2 border rounded-md bg-white border-[#cd4e4e] hover:bg-[#cd4e4e] hover:text-white transition-all duration-300 shadow-md "
+            onClick={() => handleCancellation(card.title)}
+          >
+            Cancel Booking
+          </button>
         )}
         {card.Component === "wishlist" ? (
           <button
