@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Hero from "./components/RootSection/Hero";
 import SignUp from "./components/signup/Signup";
 import Scraper from "./components/Scraper";
 import Places from "./components/Places";
@@ -38,7 +39,7 @@ function App() {
         <BrowserRouter>
           <Navbar />
           <Routes>
-            <Route path="/" element={<Places />} />
+            <Route path="/" element={<Hero />} />
             <Route path="/signup" element={<SignUp />} />
             <Route path="/login" element={<Login />} />
             <Route path="/scraper" element={<Scraper />} />

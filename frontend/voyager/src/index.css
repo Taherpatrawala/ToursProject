@@ -13,24 +13,41 @@
 html,body{
   background-color: beige!important;
 }
+html {
+  height: 100vh;
+  overflow: hidden;
+}
+body {
+
+  perspective: 1px;
+  transform-style: preserve-3d;
+  overflow-x: hidden;
+  overflow-y: scroll!important;
+}
+.section1, .section2 {
+
+  transform-style: preserve-3d;
+}
 
 #app {
-    height: 100%;
-  }
-  html,
-  body {
-    position: relative;
-    height: 100%;
-  }
+  height: 100%;
+}
+html,
+body {
+  position: relative;
+  height: 100%;
+}
+
+body {
+  background: #eee;
+  font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  color: #000;
+  margin: 0;
+  padding: 0;
+}
+
   
-  body {
-    background: #eee;
-    font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
-    font-size: 14px;
-    color: #000;
-    margin: 0;
-    padding: 0;
-  }
   
   .swiper {
     width: 100%;
@@ -104,4 +121,53 @@ html,body{
   
 
 
+  .text {
+    top:30%;
+    left:50%;
+    position: absolute;
+    font-family: 'Franklin Gothic Heavy';
+    font-size: 15vw;
+    color:white;
+    text-shadow: 2px 2px 5px rgba(0,0,0,0.3),
+    5px 5px 70px rgba(255,255,255,0.5);
+    transform: scale(1,1.1) translate(-50%, 10%);
+  }
+  .section1, .section2 {
+    width:100%;
+    min-height: 100vh;
+    position: relative;
+  }
+
+.section1{
   
+ 
+  transform-box: preserve-3d;
+  
+}
+.section1 .text {
+  top:10%;
+  transform: translateZ(-0.5px) scale(1.5,1.6) translate(-33%,10%);
+}
+.section1::before {
+  content:"";
+  width:100%;
+  height: 100vh;
+  position: absolute;
+  background: url("../src/assets/multimtbg.jpg") top center;
+  background-size: cover;
+  transform: translateZ(-1px) scale(2.2);
+  
+}
+
+.section1::after{
+  content: '';
+  position: absolute;
+  
+  width: 100%;
+  height: 100%;
+  background:url('../src/assets/image.png') no-repeat top;
+  background-size: cover;
+  
+  
+  
+}
