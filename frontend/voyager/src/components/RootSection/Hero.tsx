@@ -1,12 +1,10 @@
-import mountain from "../src/assets/mtbg.jpg";
+import HeroParallax from "./HeroParallax";
 
 const Hero = () => {
   return (
-    <div>
-      <div className="section1">
-        <div className="text">Voyager</div>
-      </div>
-      <div className="section2 bg-slate-300">sup</div>
+    <div className="w-full">
+      <HeroParallax />
+      <div className="w-full h-screen bg-red-300">heyy</div>
     </div>
   );
 };

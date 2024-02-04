@@ -13,17 +13,7 @@
 html,body{
   background-color: beige!important;
 }
-html {
-  height: 100vh;
-  overflow: hidden;
-}
-body {
 
-  perspective: 1px;
-  transform-style: preserve-3d;
-  overflow-x: hidden;
-  overflow-y: scroll!important;
-}
 .section1, .section2 {
 
   transform-style: preserve-3d;
@@ -36,6 +26,7 @@ html,
 body {
   position: relative;
   height: 100%;
+  overflow-x: clip;
 }
 
 body {
@@ -124,9 +115,11 @@ body {
   .text {
     top:30%;
     left:50%;
+    opacity: 0.5;
+    background-blend-mode: color;
     position: absolute;
     font-family: 'Franklin Gothic Heavy';
-    font-size: 15vw;
+    font-size: 12vw;
     color:white;
     text-shadow: 2px 2px 5px rgba(0,0,0,0.3),
     5px 5px 70px rgba(255,255,255,0.5);
