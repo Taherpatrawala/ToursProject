@@ -1,5 +1,8 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
+import girl from "../../assets/girl.png";
+import mountains from "../../assets/image.png";
+import nightSky from "../../assets/nightSky5.jpg";
 
 export default function HeroParallax() {
   const ref = useRef(null);
@@ -31,7 +34,7 @@ export default function HeroParallax() {
       <motion.div
         className="absolute inset-0 z-0"
         style={{
-          backgroundImage: `url(../src/assets/nightSky5.jpg)`,
+          backgroundImage: `url(${nightSky})`,
           backgroundPosition: "bottom",
           backgroundSize: "cover",
           y: backgroundY,
@@ -40,7 +43,7 @@ export default function HeroParallax() {
       <motion.div
         className="absolute w-[30vw] inset-0 z-30 left-1/4 overflow-visible"
         style={{
-          backgroundImage: `url(../src/assets/girl.png)`,
+          backgroundImage: `url(${girl})`,
           backgroundPosition: "bottom",
           backgroundSize: "cover",
           scale: girlScale,
@@ -50,7 +53,7 @@ export default function HeroParallax() {
       <motion.div
         className="absolute inset-0 z-20"
         style={{
-          backgroundImage: `url(../src/assets/image.png)`,
+          backgroundImage: `url(${mountains})`,
           backgroundPosition: "center",
           backgroundSize: "cover",
           y: girlY,
