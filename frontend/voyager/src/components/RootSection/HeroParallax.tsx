@@ -14,6 +14,7 @@ export default function HeroParallax() {
     ["-50%", "50%", "100%", "200%"]
   );
   const girlY = useTransform(scrollYProgress, [0, 1], ["0%", "20%"]);
+  const girlScale = useTransform(scrollYProgress, [0, 1], [1, 2]);
 
   return (
     <div
@@ -21,7 +22,7 @@ export default function HeroParallax() {
       className="w-full h-screen overflow-hidden relative grid place-items-center"
     >
       <motion.h1
-        style={{ y: textY }}
+        style={{ y: textY, scale: girlScale }}
         className="font-bold text-white text-7xl md:text-9xl relative z-10 -translate-y-20"
       >
         Voyager
@@ -30,7 +31,7 @@ export default function HeroParallax() {
       <motion.div
         className="absolute inset-0 z-0"
         style={{
-          backgroundImage: `url(../src/assets/multimtbg.jpg)`,
+          backgroundImage: `url(../src/assets/nightSky5.jpg)`,
           backgroundPosition: "bottom",
           backgroundSize: "cover",
           y: backgroundY,
@@ -42,6 +43,7 @@ export default function HeroParallax() {
           backgroundImage: `url(../src/assets/girl.png)`,
           backgroundPosition: "bottom",
           backgroundSize: "cover",
+          scale: girlScale,
         }}
       />
 
