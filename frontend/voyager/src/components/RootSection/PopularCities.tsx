@@ -34,7 +34,7 @@ function PopularCities() {
                          transition-all ease-in-out"
             >
               <NavLink
-                to="/popular"
+                to="/places"
                 onClick={() => {}}
                 className="border border-white rounded-lg text-white p-2 hover:bg-white hover:bg-opacity-30"
               >
@@ -69,7 +69,7 @@ function PopularCities() {
                          transition-all ease-in-out"
             >
               <NavLink
-                to="/popular"
+                to="/places"
                 onClick={() => {}}
                 className="border border-white rounded-lg text-white p-2 hover:bg-white hover:bg-opacity-30"
               >
@@ -103,7 +103,7 @@ function PopularCities() {
                          transition-all ease-in-out"
             >
               <NavLink
-                to="/popular"
+                to="/places"
                 className="border border-white rounded-lg text-white p-2 hover:bg-white hover:bg-opacity-30"
               >
                 Know more
@@ -136,7 +136,7 @@ function PopularCities() {
                          transition-all ease-in-out"
             >
               <NavLink
-                to="/popular"
+                to="/places"
                 className="border border-white rounded-lg text-white p-2 hover:bg-white hover:bg-opacity-30"
               >
                 Know more
@@ -169,7 +169,7 @@ function PopularCities() {
                          transition-all ease-in-out"
             >
               <NavLink
-                to="/popular"
+                to="/places"
                 className="border border-white rounded-lg text-white p-2 hover:bg-white hover:bg-opacity-30"
               >
                 Know more

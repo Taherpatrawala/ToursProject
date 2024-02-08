@@ -1,6 +1,7 @@
 import { useRef, useState } from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
+import toast, { Toaster } from "react-hot-toast";
 import {
   CardElement,
   Elements,
@@ -63,6 +64,10 @@ const BookingModal = ({
         console.log(res.data);
 
         stripe?.redirectToCheckout({ sessionId: res?.data?.sessionId });
+      })
+      .catch((err) => {
+        console.log(err);
+        toast.error(err.response.data);
       });
   };
 
@@ -133,6 +138,8 @@ const BookingModal = ({
           </div>
         </div>
       </div>
+
+      <Toaster />
     </dialog>
   );
 };
