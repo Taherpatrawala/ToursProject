@@ -11,32 +11,38 @@ import { Autoplay, EffectFade, FreeMode } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/effect-fade";
 
+import { RootState } from "../store/store";
+import { useDispatch, useSelector } from "react-redux";
+import { setScrapedSliceData } from "../Slices/scrapedDataSlice";
+
+import { handleScrape } from "../utils/handleScrape";
 const Places = () => {
-  const [scrapedData, setScrapedData] = useState<any>();
   const [placeName, setPlaceName] = useState<string>("");
   const [autoName, setAutoName] = useState();
   const [readMore, setReadMore] = useState<boolean>(false);
+
+  const dispatch = useDispatch();
   const ACCESS_TOKEN = Cookies.get("ACCESS_TOKEN");
   const navigate = useNavigate();
+  const scrapedSliceData = useSelector(
+    (state: RootState) => state.scrapedData.data
+  );
+  const placeNameSlice = useSelector(
+    (state: RootState) => state.scrapedData.placeName
+  );
 
   useEffect(() => {
     ACCESS_TOKEN ? null : navigate("/login");
   }, []);
-  const handleScrape = async () => {
-    await axios
-      .post(
-        "http://127.0.0.1:8000/api/scrape/",
-        { placeLink: autoName[0]?.canonical },
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${ACCESS_TOKEN}`,
-          },
-        }
-      )
-      .then((res) => setScrapedData(res))
-      .then(() => console.log())
-      .catch((err) => console.log(err.message));
+  const handleScraping = () => {
+    handleScrape(
+      autoName,
+      null,
+      ACCESS_TOKEN,
+      dispatch,
+      setScrapedSliceData,
+      null
+    );
   };
   const getAutoCompleteList = async (inputValue: string) => {
     await axios
@@ -79,7 +85,7 @@ const Places = () => {
             setPlaceName(e.target.value);
             getAutoCompleteList(e.target.value);
           }}
-          onKeyDown={(e) => (e.key === "Enter" ? handleScrape() : null)}
+          onKeyDown={(e) => (e.key === "Enter" ? handleScraping() : null)}
           className="border-2 border-[#d04e4e]  w-[40vw] lg:w-[30vw] h-10 rounded-l-full"
         />
         <select
@@ -97,7 +103,7 @@ const Places = () => {
         </select>
 
         <button
-          onClick={handleScrape}
+          onClick={handleScraping}
           className="border  rounded-r-full bg-[#d14747] p-2"
         >
           <svg
@@ -128,14 +134,14 @@ const Places = () => {
           modules={[Autoplay, FreeMode, EffectFade]}
           className="mySwiper "
         >
-          {scrapedData?.data &&
-            scrapedData.data.images.map((image: string) => {
+          {scrapedSliceData &&
+            scrapedSliceData?.images?.map((image: string) => {
               return (
                 <SwiperSlide className="">
                   <img
                     src={image}
                     alt=""
-                    className=" object-contain swiperImg opacity-100 bg-[rgb(245,245,220)] rounded-md h-[50vh] max-h-[50vh] min-h-[50vh] md:h-[70vh] md:max-h-[70vh] md:min-h-[70vh]"
+                    className=" object-contain swiperImg opacity-100 bg-[#2e2c2c] rounded-md h-[50vh] max-h-[50vh] min-h-[50vh] md:h-[70vh] md:max-h-[70vh] md:min-h-[70vh]"
                   />
                 </SwiperSlide>
               );
@@ -143,7 +149,9 @@ const Places = () => {
         </Swiper>
 
         <p className="absolute w-full md:w-min md:bottom-0 left-1/2 bottom-1/4 -translate-x-1/2 -translate-y-1/2 text-4xl font-bold text-[#e1dede] z-20">
-          {autoName && autoName[0] && autoName[0].name}
+          {autoName && autoName[0] && autoName[0].name
+            ? autoName[0].name
+            : placeNameSlice}
         </p>
       </div>
       <div className="relative">
@@ -151,9 +159,9 @@ const Places = () => {
           className={`transition-height duration-500 ${
             readMore ? "h-auto" : "h-8"
           } overflow-hidden p-4 pt-0 border border-[#827c7c] rounded-2xl`}
-          dangerouslySetInnerHTML={{ __html: scrapedData?.data.description }}
+          dangerouslySetInnerHTML={{ __html: scrapedSliceData?.description }}
         ></div>
-        {scrapedData?.data && (
+        {scrapedSliceData && (
           <button
             className="border-2 rounded-lg absolute right-0 -translate-x-1/2 -translate-y-1/3"
             onClick={() => setReadMore((prev) => !prev)}
@@ -164,7 +172,7 @@ const Places = () => {
       </div>
 
       <div className="flex flex-col items-center">
-        {scrapedData?.data?.cards.map((card: any) => {
+        {scrapedSliceData?.cards?.map((card: any) => {
           return (
             <Card
               event_id={0}
