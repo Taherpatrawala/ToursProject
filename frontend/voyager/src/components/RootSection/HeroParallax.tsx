@@ -1,8 +1,8 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
-import girl from "../../assets/girl.png";
-import mountains from "../../assets/image.png";
-import nightSky from "../../assets/nightSky5.jpg";
+import girl from ".././assets/girl.png";
+import mountains from ".././assets/image.png";
+import nightSky from ".././assets/nightSky5.jpg";
 
 export default function HeroParallax() {
   const ref = useRef(null);

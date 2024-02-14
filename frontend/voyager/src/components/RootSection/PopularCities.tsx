@@ -6,11 +6,12 @@ import Cookies from "js-cookie";
 import { handleScrape } from "../../utils/handleScrape";
 import { setScrapedSliceData } from "../../Slices/scrapedDataSlice";
 
-import Dubai from "../../assets/dubaiMuseum.jpg";
-import Mumbai from "../../assets/cities/mumbai.jpg";
-import Paris from "../../assets/cities/paris.jpg";
-import Venice from "../../assets/cities/venice.jpg";
-import Singapore from "../../assets/cities/singapore.jpg";
+import Dubai from ".././assets/dubaiMuseum.jpg";
+import Mumbai from ".././assets/cities/mumbai.jpg";
+import Paris from ".././assets/cities/paris.jpg";
+import Venice from ".././assets/cities/venice.jpg";
+import Singapore from ".././assets/cities/singapore.jpg";
+
 function PopularCities() {
   //const isInView=useInView({ref:ref,threshold:0.5})
   const dispatch = useDispatch();
