@@ -69,9 +69,6 @@ const PlaceOverview = () => {
             disableOnInteraction: false,
           }}
           loop={true}
-          style={{
-            "--swiper-navigation-color": "#000",
-          }}
           thumbs={{
             swiper:
               thumbsSwiper && !thumbsSwiper.destroyed ? thumbsSwiper : null,
