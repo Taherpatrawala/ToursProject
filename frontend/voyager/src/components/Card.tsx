@@ -7,12 +7,13 @@ import { useDispatch } from "react-redux";
 import { setWishlistData } from "../Slices/wishlistSlice";
 import getWishlistData from "../utils/getWishlistData";
 import { cancelBooking } from "../utils/cancelBooking";
+import { AxiosResponse } from "axios";
 interface Card {
   event_id: number;
   image: string;
   title: string;
   duration: string;
-  inclusions: string;
+  inclusions: string[];
   price: string;
   priceDesc: string;
   redirectUrl: string;
@@ -26,7 +27,7 @@ const Card = (card: Card) => {
 
   const handleWishlistDelete = (eventId: number) => {
     deleteWishlist(eventId).then(() => {
-      getWishlistData(card.ACCESS_TOKEN).then((res) => {
+      getWishlistData(card.ACCESS_TOKEN).then((res: AxiosResponse) => {
         dispatch(setWishlistData(res.data));
       });
     });

@@ -2,7 +2,11 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   placeName: "",
-  data: {},
+  data: {
+    description: "",
+    images: [],
+    cards: [],
+  },
 };
 
 const scrapedDataSlice = createSlice({

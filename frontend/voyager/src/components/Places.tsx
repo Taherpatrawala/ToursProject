@@ -154,23 +154,24 @@ const Places = () => {
             : placeNameSlice}
         </p>
       </div>
-      <div className="relative">
-        <div
-          className={`transition-height duration-500 ${
-            readMore ? "h-auto" : "h-8"
-          } overflow-hidden p-4 pt-0 border border-[#827c7c] rounded-2xl`}
-          dangerouslySetInnerHTML={{ __html: scrapedSliceData?.description }}
-        ></div>
-        {scrapedSliceData && (
-          <button
-            className="border-2 rounded-lg absolute right-0 -translate-x-1/2 -translate-y-1/3"
-            onClick={() => setReadMore((prev) => !prev)}
-          >
-            {readMore ? "Read Less" : "Read More"}
-          </button>
-        )}
-      </div>
-
+      {scrapedSliceData?.description && (
+        <div className="relative">
+          <div
+            className={`transition-height duration-500 ${
+              readMore ? "h-auto" : "h-8"
+            } overflow-hidden p-4 pt-0 border border-[#827c7c] rounded-2xl`}
+            dangerouslySetInnerHTML={{ __html: scrapedSliceData?.description }}
+          ></div>
+          {scrapedSliceData && (
+            <button
+              className="border-2 rounded-lg absolute right-0 -translate-x-1/2 -translate-y-1/3"
+              onClick={() => setReadMore((prev) => !prev)}
+            >
+              {readMore ? "Read Less" : "Read More"}
+            </button>
+          )}
+        </div>
+      )}
       <div className="flex flex-col items-center">
         {scrapedSliceData?.cards?.map((card: any) => {
           return (

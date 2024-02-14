@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import Card from "../Card";
 const Bookings = () => {
   const ACCESS_TOKEN = Cookies.get("ACCESS_TOKEN");
-  const [bookingsData, setBookingsData] = useState();
+  const [bookingsData, setBookingsData] = useState<any>();
   useEffect(() => {
     const func = async () => {
       await axios
@@ -21,24 +21,26 @@ const Bookings = () => {
 
   return (
     <div>
-      <div className="">
-        {bookingsData?.map((booking) => {
-          return (
-            <Card
-              event_id={booking.id}
-              image={booking.event_image}
-              title={booking.event_title}
-              inclusions=""
-              duration=""
-              priceDesc=""
-              price={booking.event_price}
-              redirectUrl={booking.event_redirecturl}
-              ACCESS_TOKEN={ACCESS_TOKEN}
-              Component="bookings"
-            />
-          );
-        })}
-      </div>
+      {bookingsData ? (
+        <div className="">
+          {bookingsData?.map((booking) => {
+            return (
+              <Card
+                event_id={booking.id}
+                image={booking.event_image}
+                title={booking.event_title}
+                inclusions=""
+                duration=""
+                priceDesc=""
+                price={booking.event_price}
+                redirectUrl={booking.event_redirecturl}
+                ACCESS_TOKEN={ACCESS_TOKEN}
+                Component="bookings"
+              />
+            );
+          })}
+        </div>
+      ) : null}
     </div>
   );
 };

@@ -2,12 +2,7 @@ import { useRef, useState } from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
 import toast, { Toaster } from "react-hot-toast";
-import {
-  CardElement,
-  Elements,
-  useStripe,
-  useElements,
-} from "@stripe/react-stripe-js";
+import { useStripe } from "@stripe/react-stripe-js";
 
 const BookingModal = ({
   isOpen,
@@ -29,7 +24,7 @@ const BookingModal = ({
     }
   );
   const stripe = useStripe();
-  const elements = useElements();
+
   const ACCESS_TOKEN = Cookies.get("ACCESS_TOKEN");
 
   const handleDialogClose = () => {
