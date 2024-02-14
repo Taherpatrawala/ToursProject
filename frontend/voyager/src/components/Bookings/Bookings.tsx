@@ -29,7 +29,7 @@ const Bookings = () => {
                 event_id={booking.id}
                 image={booking.event_image}
                 title={booking.event_title}
-                inclusions=""
+                inclusions={[]}
                 duration=""
                 priceDesc=""
                 price={booking.event_price}

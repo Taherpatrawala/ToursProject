@@ -8,6 +8,7 @@ import { useDispatch } from "react-redux";
 import { setWishlistData } from "../../Slices/wishlistSlice";
 
 import Cookies from "js-cookie";
+import { AxiosResponse } from "axios";
 const Wishlist = () => {
   const ACCESS_TOKEN: string = Cookies.get("ACCESS_TOKEN");
   const wishlists = useSelector((state: RootState) => state.wishlistData);
@@ -15,7 +16,7 @@ const Wishlist = () => {
 
   useEffect(() => {
     const wishlist = getWishlistData(ACCESS_TOKEN);
-    wishlist.then((res) => dispatch(setWishlistData(res.data)));
+    wishlist.then((res: AxiosResponse) => dispatch(setWishlistData(res.data)));
   }, []);
 
   return (
@@ -34,7 +35,7 @@ const Wishlist = () => {
                   event_id={card.id}
                   image={card.event_image}
                   title={card.event_title}
-                  inclusions=""
+                  inclusions={[]}
                   duration=""
                   priceDesc=""
                   price={card.event_price}

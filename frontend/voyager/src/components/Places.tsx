@@ -18,7 +18,7 @@ import { setScrapedSliceData } from "../Slices/scrapedDataSlice";
 import { handleScrape } from "../utils/handleScrape";
 const Places = () => {
   const [placeName, setPlaceName] = useState<string>("");
-  const [autoName, setAutoName] = useState();
+  const [autoName, setAutoName] = useState<any>();
   const [readMore, setReadMore] = useState<boolean>(false);
 
   const dispatch = useDispatch();
