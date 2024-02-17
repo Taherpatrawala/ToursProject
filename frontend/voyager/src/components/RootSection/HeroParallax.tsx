@@ -1,8 +1,9 @@
-import { motion, useScroll, useTransform } from "framer-motion";
-import { useRef } from "react";
+import { motion, useScroll, useTransform, useAnimation } from "framer-motion";
+import { useRef, useEffect } from "react";
 import girl from ".././assets/girl.png";
 import mountains from ".././assets/image.png";
 import nightSky from ".././assets/nightSky5.jpg";
+import cloud1 from ".././assets/cloud2.png";
 
 export default function HeroParallax() {
   const ref = useRef(null);
@@ -19,11 +20,38 @@ export default function HeroParallax() {
   const girlY = useTransform(scrollYProgress, [0, 1], ["0%", "20%"]);
   const girlScale = useTransform(scrollYProgress, [0, 1], [1, 2]);
 
+  const controls = useAnimation();
+  const animationVariants = {
+    hidden: { x: "-100%" },
+    visible: { x: "100%" },
+  };
+
+  // Start the animation when the component mounts
+  useEffect(() => {
+    controls.start("visible");
+  }, [controls]);
+
   return (
     <div
       ref={ref}
       className="w-full h-screen overflow-hidden relative grid place-items-center"
     >
+      <motion.div
+        initial="hidden"
+        animate={controls}
+        variants={animationVariants}
+        transition={{ duration: 30, repeat: Infinity, repeatType: "reverse" }}
+        style={{
+          width: "30vw", // Adjust the width of your cloud
+          height: "20vh",
+
+          position: "absolute",
+          top: "10%", // Adjust the starting position vertically
+          zIndex: 5, // Ensure it's on top of other elements
+        }}
+      >
+        <img src={cloud1} alt="" />
+      </motion.div>
       <motion.h1
         style={{ y: textY, scale: girlScale }}
         className="font-bold text-white text-7xl md:text-9xl relative z-10 -translate-y-20"
@@ -49,7 +77,6 @@ export default function HeroParallax() {
           scale: girlScale,
         }}
       />
-
       <motion.div
         className="absolute inset-0 z-20"
         style={{
