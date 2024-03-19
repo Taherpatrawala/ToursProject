@@ -3,7 +3,7 @@ import { useRef, useEffect } from "react";
 import girl from ".././assets/girl.png";
 import mountains from ".././assets/image.png";
 import nightSky from ".././assets/nightSky5.jpg";
-import cloud1 from ".././assets/cloud2.png";
+import cloud1 from ".././assets/cloud3.png";
 
 export default function HeroParallax() {
   const ref = useRef(null);
