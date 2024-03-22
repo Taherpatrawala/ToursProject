@@ -21,7 +21,7 @@ const SignUp = () => {
     try {
       await axios
         .post(
-          `${import.meta.env.VITE_SERVER_LINK}auth/signup/`,
+          `${import.meta.env.VITE_SERVER_LINK}/auth/signup/`,
           { ...signUpData, profileImage: pfp },
           config
         )

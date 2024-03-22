@@ -13,7 +13,7 @@ export default async function addToWishlist(cardData: cardDataInterface) {
   let message = "";
   await axios
     .post(
-      `${import.meta.env.VITE_SERVER_LINK}auth/addToWishlist/`,
+      `${import.meta.env.VITE_SERVER_LINK}/auth/addToWishlist/`,
       {
         event_title: cardData.title.trim(),
         event_image: cardData.image,

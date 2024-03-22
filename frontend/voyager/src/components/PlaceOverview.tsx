@@ -31,7 +31,7 @@ const PlaceOverview = () => {
     const handleEventOverview = async () => {
       try {
         const res = await axios.post(
-          `${import.meta.env.VITE_SERVER_LINK}api/scrape/event/`,
+          `${import.meta.env.VITE_SERVER_LINK}/api/scrape/event/`,
           {
             redirectUrl: `/${tour}.html?placeCode=${event}`,
           }
