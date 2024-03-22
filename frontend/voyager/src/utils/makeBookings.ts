@@ -13,7 +13,7 @@ interface paramsInterface {
 export default async function makeBookings(params: paramsInterface) {
   const ACCESS_TOKEN = Cookies.get("ACCESS_TOKEN");
   await axios.post(
-    "http://localhost:8000/bookings/",
+    `${import.meta.env.VITE_SERVER_LINK}/bookings/`,
     {
       event_title: params.event_title,
       event_redirecturl: params.event_redirecturl,

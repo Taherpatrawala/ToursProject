@@ -40,7 +40,7 @@ const BookingModal = ({
 
     return await axios
       .post(
-        "http://localhost:8000/bookings/",
+        `${import.meta.env.VITE_SERVER_LINK}/bookings/`,
         {
           event_title: event_title,
           event_price: event_price,

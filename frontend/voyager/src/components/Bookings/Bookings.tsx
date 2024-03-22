@@ -8,7 +8,7 @@ const Bookings = () => {
   useEffect(() => {
     const func = async () => {
       await axios
-        .get("http://localhost:8000/bookings/getBookingData/", {
+        .get(`${import.meta.env.VITE_SERVER_LINK}/bookings/getBookingData/`, {
           headers: {
             Authorization: `Bearer ${ACCESS_TOKEN}`,
           },

@@ -8,7 +8,7 @@ const ReviewInput = (props) => {
 
   const handleReview = async () => {
     axios.post(
-      "http://localhost:8000/api/accounts/addReview/",
+      `${import.meta.env.VITE_SERVER_LINK}/api/accounts/addReview/`,
       {
         review: review,
         event_title: props.title,

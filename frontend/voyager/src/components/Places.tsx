@@ -47,7 +47,7 @@ const Places = () => {
   const getAutoCompleteList = async (inputValue: string) => {
     await axios
       .post(
-        "http://localhost:8000/api/scrape/getAutocompleteData/",
+        `${import.meta.env.VITE_SERVER_LINK}/api/scrape/getAutocompleteData/`,
         {
           placeName: inputValue,
         },

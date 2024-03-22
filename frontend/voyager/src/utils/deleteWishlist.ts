@@ -4,7 +4,7 @@ const ACCESS_TOKEN = Cookies.get("ACCESS_TOKEN");
 
 export default async (event_id: number) => {
   return axios.delete(
-    "http://localhost:8000/api/accounts/deleteWishlist/",
+    `${import.meta.env.VITE_SERVER_LINK}/api/accounts/deleteWishlist/`,
 
     {
       data: { id: event_id },
