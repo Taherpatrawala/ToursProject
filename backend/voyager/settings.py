@@ -161,6 +161,9 @@ SIMPLE_JWT = {
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
+    "https://voyager8.netlify.app/",
+    "https://taher-patrawala-voyager.netlify.app/",
+    "https://taher-patrawala-voyager.netlify.app/",
 ]
 
 AUTH_USER_MODEL = 'accounts.UserAccount'
