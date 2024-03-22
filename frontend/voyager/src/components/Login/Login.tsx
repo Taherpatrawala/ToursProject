@@ -15,7 +15,7 @@ const Login = () => {
 
   const handleLogin = async () => {
     axios
-      .post("http://127.0.0.1:8000/api/token/", logInData)
+      .post(`${import.meta.env.VITE_SERVER_LINK}api/token/`, logInData)
       .then((res) => {
         dispatch(setToken(res.data));
 

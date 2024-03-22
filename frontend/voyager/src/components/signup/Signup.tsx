@@ -21,7 +21,7 @@ const SignUp = () => {
     try {
       await axios
         .post(
-          "http://127.0.0.1:8000/auth/signup/",
+          `${import.meta.env.VITE_SERVER_LINK}auth/signup/`,
           { ...signUpData, profileImage: pfp },
           config
         )

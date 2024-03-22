@@ -7,7 +7,7 @@ const Scraper = () => {
   const handleScrape = async () => {
     await axios
       .post(
-        "http://127.0.0.1:8000/api/scrape/",
+        `${import.meta.env.VITE_SERVER_LINK}api/scrape/`,
         { placeName: placeName },
         {
           headers: {

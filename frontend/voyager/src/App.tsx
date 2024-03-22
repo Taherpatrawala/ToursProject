@@ -26,7 +26,7 @@ function App() {
     dispatch(setToken({ access: ACCESS_TOKEN, refresh: REFRESH_TOKEN }));
     const userData = async () => {
       await axios
-        .get("http://127.0.0.1:8000/api/accounts/getUserData/", {
+        .get(`${import.meta.env.VITE_SERVER_LINK}api/accounts/getUserData/`, {
           headers: { Authorization: `Bearer ${ACCESS_TOKEN}` },
         })
         .then((res) => dispatch(setUserData(res.data)));
