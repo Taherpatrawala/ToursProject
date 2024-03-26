@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { setToken } from "../../Slices/tokensSlice";
 import { useState } from "react";
 import { useNavigate } from "react-router";
+import { NavLink } from "react-router-dom";
 import Cookies from "js-cookie";
 const Login = () => {
   const [logInData, setlogInData] = useState({
@@ -93,12 +94,12 @@ const Login = () => {
               </button>
               <p className="text-sm font-light text-gray-500 dark:text-gray-400">
                 New to Voyager?
-                <a
-                  href="#"
+                <NavLink
+                  to="/signup"
                   className="font-medium text-primary-600 hover:underline dark:text-primary-500"
                 >
                   Sign Up here
-                </a>
+                </NavLink>
               </p>
             </div>
           </div>

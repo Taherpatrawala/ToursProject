@@ -38,6 +38,17 @@ body {
   padding: 0;
 }
 
+.Mdirection{
+  direction: rtl;
+  transform-origin: right;
+  position: absolute;
+  right: 0%;
+}
+
+.active{
+  color: aqua;
+}
+
   
   
   .swiper {

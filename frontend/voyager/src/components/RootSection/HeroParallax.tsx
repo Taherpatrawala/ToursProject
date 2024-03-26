@@ -69,14 +69,20 @@ export default function HeroParallax() {
         }}
       />
       <motion.div
-        className="absolute w-[30vw] inset-0 z-30 left-1/4 overflow-visible"
+        className="absolute w-[30vw] inset-0 z-30 right-1/2 md:left-1/4  overflow-visible"
         style={{
-          backgroundImage: `url(${girl})`,
-          backgroundPosition: "bottom",
-          backgroundSize: "cover",
           scale: girlScale,
+          width: "100%",
         }}
-      />
+      >
+        {/* Replace background image with img tag */}
+        <img
+          src={girl}
+          alt="Girl"
+          className="w-max align-middle"
+          style={{ height: "100%", objectFit: "cover" }}
+        />
+      </motion.div>
       <motion.div
         className="absolute inset-0 z-20"
         style={{

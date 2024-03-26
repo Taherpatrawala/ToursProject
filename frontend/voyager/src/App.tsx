@@ -5,7 +5,8 @@ import Scraper from "./components/Scraper";
 import Places from "./components/Places";
 import PlaceOverview from "./components/PlaceOverview";
 import Login from "./components/Login/Login";
-import Navbar from "./components/Navbar/Navbar";
+
+import NewNavbar from "./components/Navbar/NewNavbar";
 import Bookings from "./components/Bookings/Bookings";
 import { useEffect } from "react";
 import axios from "axios";
@@ -37,7 +38,7 @@ function App() {
     <div className="App overflow-y-visible">
       <Elements stripe={stripePromise}>
         <BrowserRouter>
-          <Navbar />
+          <NewNavbar />
           <Routes>
             <Route path="/" element={<Hero />} />
             <Route path="/signup" element={<SignUp />} />
