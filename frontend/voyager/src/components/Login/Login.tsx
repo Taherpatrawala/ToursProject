@@ -8,29 +8,37 @@ import Cookies from "js-cookie";
 import toast, { Toaster } from "react-hot-toast";
 const Login = () => {
   const [logInData, setlogInData] = useState({
-    email: "",
-    password: "",
+    email: "test@test.com",
+    password: "123456",
   });
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleLogin = async () => {
-    axios
-      .post(`${import.meta.env.VITE_SERVER_LINK}/api/token/`, logInData)
-      .then((res) => {
-        dispatch(setToken(res.data));
+    const fetchLogin = async () => {
+      return await axios
+        .post(`${import.meta.env.VITE_SERVER_LINK}/api/token/`, logInData)
+        .then((res) => {
+          dispatch(setToken(res.data));
 
-        Cookies.set("ACCESS_TOKEN", res.data.access, {
-          expires: 1,
+          Cookies.set("ACCESS_TOKEN", res.data.access, {
+            expires: 1,
+          });
+          Cookies.set("REFRESH_TOKEN", res.data.refresh, { expires: 14 });
+          navigate("/places");
+        })
+        .catch((err) => {
+          console.log(err.message);
+          toast.error(err.response.data.detail);
         });
-        Cookies.set("REFRESH_TOKEN", res.data.refresh, { expires: 14 });
-        navigate("/places");
-      })
-      .catch((err) => {
-        console.log(err.message);
-        toast.error(err.response.data.detail);
-      });
+    };
+
+    toast.promise(fetchLogin(), {
+      loading: "Logging in...",
+      success: "",
+      error: "Login failed",
+    });
   };
   return (
     <div>
