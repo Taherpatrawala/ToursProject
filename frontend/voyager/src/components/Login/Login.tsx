@@ -5,6 +5,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router";
 import { NavLink } from "react-router-dom";
 import Cookies from "js-cookie";
+import toast, { Toaster } from "react-hot-toast";
 const Login = () => {
   const [logInData, setlogInData] = useState({
     email: "",
@@ -26,7 +27,10 @@ const Login = () => {
         Cookies.set("REFRESH_TOKEN", res.data.refresh, { expires: 14 });
         navigate("/places");
       })
-      .catch((err) => console.log(err.message));
+      .catch((err) => {
+        console.log(err.message);
+        toast.error(err.response.data.detail);
+      });
   };
   return (
     <div>
@@ -104,6 +108,7 @@ const Login = () => {
             </div>
           </div>
         </div>
+        <Toaster />
       </div>
     </div>
   );

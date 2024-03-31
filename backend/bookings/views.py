@@ -23,13 +23,13 @@ class MakeBooking(APIView):
             user=request.user.id).filter(event_title=event_title)
         print(existingBookings)
         if existingBookings:
-            return Response("Booking Already Made", status=status.HTTP_400_BAD_REQUEST)
+            return Response("Booking already been made for this event!", status=status.HTTP_400_BAD_REQUEST)
         event_price = mutable_data['event_price'].replace(
             '₹', '').replace(',', '').replace('*', '').strip()
         number_of_adults = mutable_data['number_of_adults']
         serializer_instance = BookingsSerializers(data=mutable_data)
         if serializer_instance.is_valid():
-            print(serializer_instance.validated_data)
+            print(config('STRIPE_SECRET_KEY'))
             try:
                 stripe.api_key = config('STRIPE_SECRET_KEY')
                 checkout_session = stripe.checkout.Session.create(
@@ -44,14 +44,14 @@ class MakeBooking(APIView):
                         'quantity': 1
                     }],
                     mode='payment',
-                    success_url='http://localhost:5173/bookings/',
-                    cancel_url='http://localhost:5173/places/',
+                    success_url=f'{config("CLIENT_URL")}/bookings/',
+                    cancel_url=f'{config("CLIENT_URL")}/places/',
                 )
                 serializer_instance.save()
                 return Response({'sessionId': checkout_session.id}, status=status.HTTP_202_ACCEPTED)
             except Exception as e:
                 print(e)
-                return Response('Error hogaya ')
+                return Response('An error occured while trying to connect with stripe', status=status.HTTP_400_BAD_REQUEST)
 
         else:
             return Response(serializer_instance.errors, status=status.HTTP_406_NOT_ACCEPTABLE)
