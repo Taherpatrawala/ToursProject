@@ -2,6 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: heroFont ;
+  src: url(heroFont7.ttf);
+}
+
+.hero-text{
+  font-family: heroFont;
+}
+
 .morelink{
     display: none;
 }

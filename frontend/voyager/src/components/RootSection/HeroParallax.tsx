@@ -1,9 +1,9 @@
 import { motion, useScroll, useTransform, useAnimation } from "framer-motion";
 import { useRef, useEffect } from "react";
-import girl from ".././assets/girl-min.png";
-import mountains from ".././assets/image-min.png";
-import nightSky from ".././assets/nightSky5-min.jpg";
-import cloud1 from ".././assets/cloud3-min.png";
+import girl from ".././assets/girl-min-min.png";
+import mountains from ".././assets/image-min-min.png";
+import nightSky from ".././assets/nightSky5-min-min.jpg";
+import cloud1 from ".././assets/cloud3-min-min.png";
 
 export default function HeroParallax() {
   const ref = useRef(null);
@@ -15,7 +15,7 @@ export default function HeroParallax() {
   const textY = useTransform(
     scrollYProgress,
     [0, 0.3, 0.7, 1],
-    ["-50%", "50%", "100%", "200%"]
+    ["-65%", "65%", "100%", "200%"]
   );
   const girlY = useTransform(scrollYProgress, [0, 1], ["0%", "20%"]);
   const girlScale = useTransform(scrollYProgress, [0, 1], [1, 2]);
@@ -54,7 +54,7 @@ export default function HeroParallax() {
       </motion.div>
       <motion.h1
         style={{ y: textY, scale: girlScale }}
-        className="font-bold text-white text-7xl md:text-9xl relative z-10 -translate-y-20"
+        className="hero-text font-bold text-white text-7xl md:text-9xl relative z-10 -translate-y-60"
       >
         Voyager
       </motion.h1>

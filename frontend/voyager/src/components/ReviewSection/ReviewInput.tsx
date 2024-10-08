@@ -25,7 +25,7 @@ const ReviewInput = (props) => {
   return (
     <div className="flex flex-col justify-center items-center">
       <textarea
-        className=" resize max-w-[90vw]"
+        className=" resize max-w-[90vw] border border-black outline-none"
         name=""
         id=""
         value={review}

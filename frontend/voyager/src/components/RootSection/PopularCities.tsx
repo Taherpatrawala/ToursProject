@@ -6,10 +6,10 @@ import Cookies from "js-cookie";
 import { handleScrape } from "../../utils/handleScrape";
 import { setScrapedSliceData } from "../../Slices/scrapedDataSlice";
 
-import Dubai from ".././assets/dubaiMuseum.jpg";
-import Mumbai from ".././assets/cities/mumbai.jpg";
+import Dubai from ".././assets/dubaiMuseum-min.jpg";
+import Mumbai from ".././assets/cities/mumbai-min.jpg";
 import Paris from ".././assets/cities/paris.jpg";
-import Venice from ".././assets/cities/venice.jpg";
+import Venice from ".././assets/cities/venice-min.jpg";
 import Singapore from ".././assets/cities/singapore.jpg";
 
 function PopularCities() {
